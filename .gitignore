@@ -1,0 +1,5 @@
+/django-env
+/admin=admin1234 (password)
+/.vscode
+Pipfile
+Pipfile.lock
