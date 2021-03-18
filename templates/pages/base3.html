@@ -1,0 +1,220 @@
+<!-- https://bulmatemplates.github.io/bulma-templates/templates/admin.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flask Auth Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
+  </head>
+
+  <body>
+    <section class="hero is-small is-default">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <span class="navbar-burger burger" data-target="navbarMenu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <div id="navbarMenuHeroA" class="navbar-menu">
+              <div class="navbar-end">
+                <a href="{{ url_for('main.index') }}" class="navbar-item">
+                  Home
+                </a>
+                <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                  Profile
+                </a>
+                <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                  Login
+                </a>
+                <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                  Sign Up
+                </a>
+                <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    <!-- END NAV -->
+    <div class="container">
+      <div class="columns">
+        <div class="column is-3">
+          <aside class="menu is-hidden-mobile">
+            <p class="menu-label">General</p>
+            <ul class="menu-list">
+              <li><a class="is-active">Dashboard</a></li>
+              <li><a>Open Tasks</a></li>
+              <li><a>Create New Project</a></li>
+            </ul>
+            <p class="menu-label">Administration</p>
+            <ul class="menu-list">
+              <li><a>Team Settings</a></li>
+              <li>
+                <a>Manage Your Team</a>
+                <ul>
+                  <li><a>Members</a></li>
+                  <li><a>Add a member</a></li>
+                  <li><a>Remove a member</a></li>
+                </ul>
+              </li>
+              <li><a>Cloud Storage Environment Settings</a></li>
+              <li><a>Authentication</a></li>
+              <li><a>Payments</a></li>
+            </ul>
+            <p class="menu-label">Transactions</p>
+            <ul class="menu-list">
+              <li><a>Payments</a></li>
+              <li><a>Transfers</a></li>
+              <li><a>Balance</a></li>
+              <li><a>Reports</a></li>
+            </ul>
+          </aside>
+        </div>
+        <div class="column is-9">
+            <section class="hero welcome ">
+                <div class="hero-body">
+                  <div class="container">
+                    <h1 class="title">Admin Panel</h1>
+                  </div>
+                </div>
+            </section>
+          <section class="hero is-info welcome is-small">
+            <div class="hero-body">
+              <div class="container">
+                <h1 class="title">Hello, Username.</h1>
+                <h2 class="subtitle">I hope you are having a great day!</h2>
+              </div>
+            </div>
+          </section>
+          <section class="info-tiles">
+            <div class="tile is-ancestor has-text-centered">
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">3</p>
+                  <p class="subtitle">Projects</p>
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">2</p>
+                  <p class="subtitle">Deadlines</p>
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">30</p>
+                  <p class="subtitle">Open Tasks</p>
+                </article>
+              </div>
+              <div class="tile is-parent">
+                <article class="tile is-child box">
+                  <p class="title">20</p>
+                  <p class="subtitle">Completed Tasks</p>
+                </article>
+              </div>
+            </div>
+          </section>
+          <div class="columns">
+            <div class="column is-6">
+              <div class="card events-card">
+                <header class="card-header">
+                  <p class="card-header-title">New Projects Created</p>
+                  <a
+                    href="#"
+                    class="card-header-icon"
+                    aria-label="more options"
+                  >
+                    <span class="icon">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </header>
+                <div class="card-table">
+                  <div class="content">
+                    <table class="table is-fullwidth is-striped">
+                      <tbody>
+                        <tr>
+                          <td width="5%"><i class="fa fa-bell-o"></i></td>
+                          <td>Lorum ipsum dolem aire</td>
+                          <td class="level-right">
+                            <a class="button is-small is-primary" href="#"
+                              >View</a
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="5%"><i class="fa fa-bell-o"></i></td>
+                          <td>Lorum ipsum dolem aire</td>
+                          <td class="level-right">
+                            <a class="button is-small is-primary" href="#"
+                              >View</a
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="5%"><i class="fa fa-bell-o"></i></td>
+                          <td>Lorum ipsum dolem aire</td>
+                          <td class="level-right">
+                            <a class="button is-small is-primary" href="#"
+                              >View</a
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <footer class="card-footer">
+                  <a href="#" class="card-footer-item">View All</a>
+                </footer>
+              </div>
+            </div>
+            <div class="column is-6">
+              <div class="card">
+                <header class="card-header">
+                  <p class="card-header-title">Task ID Search</p>
+                  <a
+                    href="#"
+                    class="card-header-icon"
+                    aria-label="more options"
+                  >
+                    <span class="icon">
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </header>
+                <div class="card-content">
+                  <div class="content">
+                    <div class="control has-icons-left has-icons-right">
+                      <input
+                        class="input is-large"
+                        type="text"
+                        placeholder=""
+                      />
+                      <span class="icon is-medium is-left">
+                        <i class="fa fa-search"></i>
+                      </span>
+                      <span class="icon is-medium is-right">
+                        <i class="fa fa-check"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script async type="text/javascript" src="../js/bulma.js"></script>
+  </body>
+</html>
