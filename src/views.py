@@ -10,7 +10,12 @@ def home_view(request, *args, **kwargs):
 
 
 def tweets_list_view(request, *args, **kwargs):
-    return render(request, "tweets/list.html")
+    qs = Tweet.objects.all()
+    posts_list = [{"id": x.id, "content": x.content} for x in qs]
+    data = {
+        "response": posts_list
+    }
+    return JsonResponse(data)
 
 
 def tweets_detail_view(request, tweet_id, *args, **kwargs):
