@@ -6,7 +6,7 @@ from .models import Tweet
 
 
 def home_view(request, *args, **kwargs):
-    return render(request, "pages/base.html", context={}, status=200)
+    return render(request, "pages/home.html", context={}, status=200)
 
 
 def tweets_list_view(request, *args, **kwargs):
