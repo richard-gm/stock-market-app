@@ -25,7 +25,7 @@ SECRET_KEY = 'u=_q*at*+46@wgqz-hwh8%kt%74fjro#vbv&6r29gvp0h7ngt+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh']
 
 
 # Application definition
