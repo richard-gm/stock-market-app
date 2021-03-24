@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from src.views import home_view, tweets_detail_view, tweets_list_view, profile, post_create_view
+from src.views import home_view, tweets_detail_view, tweets_list_view, profile, create_post_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +23,5 @@ urlpatterns = [
     path('profile', profile),
     path('tweets', tweets_list_view),
     path('tweets/<int:tweet_id>', tweets_detail_view),
-    path('profile/create_view', post_create_view),
+    path('profile/create_post', create_post_view),
 ]
