@@ -28,7 +28,7 @@ def create_post_view(request, *args, **kwargs):
         if request.is_ajax():
             return JsonResponse(obj.serialize(), status=201)  # 201 == created items
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
-            return redirect(next_url)
+             return redirect(next_url)
         form = TweetForm()
     return render(request, 'components/form.html', context={"form": form})
 
