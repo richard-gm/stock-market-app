@@ -3,3 +3,5 @@
 /.vscode
 Pipfile
 Pipfile.lock
+/.vscode
+.idea
