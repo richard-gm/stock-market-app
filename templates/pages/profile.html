@@ -19,6 +19,7 @@
       action="/profile/create_post"
     >
       {% csrf_token %}
+      <div class="d-none alert alert-danger" id="post-create-form-error" ></div>
       <input type="hidden" value="/" name="next" />
       <textarea
         required="required"
@@ -35,6 +36,17 @@
 
 <script>
 
+function handlePostFormError(msg, display){
+    const myErrorDivForm = document.getElementById("post-create-form-error")
+    if (display === true){
+        //display error
+        myErrorDivForm.setAttribute("class", "d-block alert alert-danger")
+        myErrorDivForm.innerText = msg
+    }else{
+        //hide error
+        myErrorDivForm.setAttribute("class", "d-none alert alert-danger")
+    }
+}
 
 function handleTweetCreateFormDidSumbit(event) {
     event.preventDefault()
@@ -50,13 +62,32 @@ function handleTweetCreateFormDidSumbit(event) {
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.onload = function() {
         if (xhr.status === 201) {
+            handlePostFormError("", false)
             const newTweetJson = xhr.response
             const newTweetElement = formatTweetElement(newTweetJson)
             const ogHtml = tweetsContainerElement.innerHTML
             tweetsContainerElement.innerHTML = newTweetElement + ogHtml
             myForm.reset()
+        } else if (xhr.status === 400){
+            const errorJson = xhr.response
+            const contentError = errorJson.content
+            let contentErrorMsg;
+            if (contentError){
+                contentErrorMsg = contentError[0]
+                if(contentErrorMsg){
+                    handlePostFormError(contentErrorMsg, true)
+                }else{
+                    alert('An error ocurred. PLease try again.')
+                }
+            }else {
+                alert("An error occurred. Please try again")
+            }
+        } else if (xhr.status === 500){
+            console.log("There was a server error, please try again later.")
         }
-
+    }
+    xhr.onerror = function (){
+        alert("Error occurred. Please try again")
     }
     xhr.send(myFormData)
 }
