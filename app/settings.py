@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/2.2/ref/settings/
+https://docs.djangoproject.com/en/2. 2/ref/settings/
 """
 
 import os
@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh']
 LOGIN_URL = "/login"
 
+# Max length for Post made by users
+MAX_LENGTH = 240
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third Party API
+    'rest_framework',
+    # Internal
     'src',
+
 ]
 
 MIDDLEWARE = [

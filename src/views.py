@@ -3,9 +3,13 @@ from django.conf import settings
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
+# django REST API framework
+from rest_framework.response import Response  # Will handle the response rather than senting JSON Obj
+from rest_framework.decorators import api_view
+
 from .forms import TweetForm
 from .models import Tweet
-
+from .serializer import TweetSerilizer
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 # Create your views here.
 
@@ -29,7 +33,33 @@ def profile(request, *args, **kwargs):
     return render(request, "pages/profile.html", context={}, status=200)
 
 
+@api_view(['POST'])
 def create_post_view(request, *args, **kwargs):
+    serializer = TweetSerilizer(data=request.POST)
+    if serializer.is_valid(raise_exception=True):  # raise_exeption uses the build-in Response function to handle issues
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=201)
+    return Response({}, status=400)
+
+
+@api_view(['GET'])
+def tweets_list_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    serializer = TweetSerilizer(qs, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def tweets_detail_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.all()
+    if not qs.exists():
+        return Response({}, status=400)
+    obj = qs.first()
+    serializer = TweetSerilizer(obj)
+    return Response(serializer.data, status=200)
+
+
+def create_post_view_django(request, *args, **kwargs):
     # handling non-authenticated users
     user = request.user
     if not request.user.is_authenticated:
@@ -55,7 +85,7 @@ def create_post_view(request, *args, **kwargs):
     return render(request, 'components/form.html', context={"form": form})
 
 
-def tweets_list_view(request, *args, **kwargs):
+def tweets_list_view_django(request, *args, **kwargs):
     qs = Tweet.objects.all()
     tweets_list = [x.serialize() for x in qs]
     data = {
@@ -65,7 +95,7 @@ def tweets_list_view(request, *args, **kwargs):
     return JsonResponse(data)
 
 
-def tweets_detail_view(request, tweet_id, *args, **kwargs):
+def tweets_detail_view_djando(request, tweet_id, *args, **kwargs):
     data = {
         "id": tweet_id,
     }
