@@ -61,6 +61,20 @@ def tweets_detail_view(request, tweet_id, *args, **kwargs):
     return Response(serializer.data, status=200)
 
 
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def tweets_delete_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.filter(id=tweet_id)
+    if not qs.exists():
+        return Response({}, status=400)
+    qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
+    if not qs.exists():
+        return Response({'message': 'You cannot delete this post'}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({'message': 'Post removed'}, status=200)
+
+
 def create_post_view_django(request, *args, **kwargs):
     # handling non-authenticated users
     user = request.user
