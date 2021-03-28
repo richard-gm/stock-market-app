@@ -5,7 +5,8 @@ from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 # django REST API framework
 from rest_framework.response import Response  # Will handle the response rather than senting JSON Obj
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 from .forms import TweetForm
 from .models import Tweet
@@ -34,6 +35,7 @@ def profile(request, *args, **kwargs):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def create_post_view(request, *args, **kwargs):
     serializer = TweetSerilizer(data=request.POST)
     if serializer.is_valid(raise_exception=True):  # raise_exeption uses the build-in Response function to handle issues
