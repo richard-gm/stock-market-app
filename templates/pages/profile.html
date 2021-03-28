@@ -82,6 +82,9 @@ function handleTweetCreateFormDidSumbit(event) {
             }else {
                 alert("An error occurred. Please try again")
             }
+        } else if (xhr.status === 401){
+            console.log("Non authorised user - You must login")
+            window.location.href = "/login.html"
         } else if (xhr.status === 500){
             console.log("There was a server error, please try again later.")
         }

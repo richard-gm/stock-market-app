@@ -11,7 +11,18 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 def home_view(request, *args, **kwargs):
+    print(request.user)
     return render(request, "pages/home.html", context={}, status=200)
+
+
+def login_page(request, *args, **kwargs):
+    print(request.user)
+    return render(request, "pages/login.html", context={}, status=200)
+
+
+def portfolio(request, *args, **kwargs):
+    print(request.user)
+    return render(request, "pages/portfolio.html", context={}, status=200)
 
 
 def profile(request, *args, **kwargs):
@@ -19,12 +30,20 @@ def profile(request, *args, **kwargs):
 
 
 def create_post_view(request, *args, **kwargs):
+    # handling non-authenticated users
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401)
+        return redirect(settings.LOGIN_URL)
     form = TweetForm(request.POST or None)
     next_url = request.POST.get("next") or None
     if form.is_valid():
         obj = form.save(commit=False)
         # do other form related logic
-        obj.save()
+        obj.user = user  # user has been associated with the object created
+        obj.save()  # saving the obj to db
         if request.is_ajax():
             return JsonResponse(obj.serialize(), status=201)  # 201 == created items
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
