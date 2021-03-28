@@ -19,7 +19,7 @@
       action="/profile/create_post"
     >
       {% csrf_token %}
-      <div class="d-none alert alert-danger" id="post-create-form-error" ></div>
+      <div class="d-none alert alert-danger" id="post-create-form-error"></div>
       <input type="hidden" value="/" name="next" />
       <textarea
         required="required"
@@ -85,7 +85,10 @@ function handleTweetCreateFormDidSumbit(event) {
         } else if (xhr.status === 401){
             console.log("Non authorised user - You must login")
             window.location.href = "/login.html"
-        } else if (xhr.status === 500){
+        } else if (xhr.status === 403){
+            console.log("Non authorised user - You must login")
+            window.location.href = "/login.html"
+        }else if (xhr.status === 500){
             console.log("There was a server error, please try again later.")
         }
     }
