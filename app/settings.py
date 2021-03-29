@@ -30,7 +30,7 @@ LOGIN_URL = "/login"
 
 # Max length for Post made by users
 MAX_LENGTH = 240
-
+TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment']
 # Application definition
 
 INSTALLED_APPS = [
