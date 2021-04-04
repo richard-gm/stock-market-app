@@ -22,13 +22,15 @@ from src.views import (
     tweets_list_view,
     profile,
     create_post_view,
-    portfolio
+    portfolio,
+    dashboard
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
     path('profile', profile),
+    path('dashboard', dashboard),
     path('tweets', tweets_list_view),
     path('tweets/<int:tweet_id>', tweets_detail_view),
     path('profile/create_post', create_post_view),

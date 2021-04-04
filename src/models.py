@@ -7,15 +7,28 @@ User = settings.AUTH_USER_MODEL
 
 
 # table for likes of each tweet
+# Watch tutorial from 3h50min onwards
 class TweetLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
+class TweetComment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['timestamp']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.body, self.name)
+
+
 # table for content of each tweet
 class Tweet(models.Model):
-    # Maps to SQL data
-    # id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # One user only
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='images/', blank=True, null=True)
