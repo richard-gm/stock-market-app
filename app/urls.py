@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from src.views import (
     home_view,
+    tweets_action_view,
     tweets_delete_view,
     tweets_detail_view,
     tweets_list_view,
@@ -35,5 +36,6 @@ urlpatterns = [
     path('tweets/<int:tweet_id>', tweets_detail_view),
     path('profile/create_post', create_post_view),
     path('api/tweets/<int:tweet_id>/delete', tweets_delete_view),
+    path('api/tweets/action', tweets_action_view),
     path('portfolio', portfolio),
 ]

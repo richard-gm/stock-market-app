@@ -83,11 +83,12 @@ def tweets_delete_view(request, tweet_id, *args, **kwargs):
     return Response({'message': 'Post removed'}, status=200)
 
 
+#  From 5h:05min onwards
 @api_view(['DELETE', 'POST'])
 @permission_classes([IsAuthenticated])
 def tweets_action_view(request, *args, **kwargs):
     # Actions such as Like, unlike, comment
-    serializer = TweetActionSerializer(request.POST)
+    serializer = TweetActionSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
         tweet_id = data.get("id")
@@ -95,13 +96,15 @@ def tweets_action_view(request, *args, **kwargs):
 
         qs = Tweet.objects.filter(id=tweet_id)
         if not qs.exists():
-            return Response({}, status=400)
+            return Response({}, status=404)
         obj = qs.first()
         if action == "like":
             obj.likes.add(request.user)  # Same can be applied for comments
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
         elif action == "unlike":
             obj.likes.remove(request.user)
-        elif action == "unlike":
+        elif action == "comment":
             pass
     return Response({'message': 'Post removed'}, status=200)
 
