@@ -30,7 +30,8 @@ LOGIN_URL = "/login"
 
 # Max length for Post made by users
 MAX_LENGTH = 240
-
+# Max tweet actions
+TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment']
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,16 +125,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_URL = '/static/'
+
+
+# JSON rendered for Production
+DEFAULT_RENDERER_CLASSES = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+# Browsable API enable if debug mode is ON
+if DEBUG:
+    DEFAULT_RENDERER_CLASSES += [
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
 
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication'
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        # 'rest_framework.renderers.BrowsableAPIRenderer', #Uncomment this line to see REST API browsable
-    ]
+    'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }

@@ -10,8 +10,11 @@ from rest_framework.permissions import IsAuthenticated
 
 from .forms import TweetForm
 from .models import Tweet
-from .serializer import TweetSerilizer
+from .serializer import TweetSerializer, TweetActionSerializer
+
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
+
+
 # Create your views here.
 
 
@@ -30,6 +33,11 @@ def portfolio(request, *args, **kwargs):
     return render(request, "pages/portfolio.html", context={}, status=200)
 
 
+def dashboard(request, *args, **kwargs):
+    print(request.user)
+    return render(request, "pages/dashboard.html", context={}, status=200)
+
+
 def profile(request, *args, **kwargs):
     return render(request, "pages/profile.html", context={}, status=200)
 
@@ -37,7 +45,7 @@ def profile(request, *args, **kwargs):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_post_view(request, *args, **kwargs):
-    serializer = TweetSerilizer(data=request.POST)
+    serializer = TweetSerializer(data=request.POST)
     if serializer.is_valid(raise_exception=True):  # raise_exeption uses the build-in Response function to handle issues
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
@@ -47,7 +55,7 @@ def create_post_view(request, *args, **kwargs):
 @api_view(['GET'])
 def tweets_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    serializer = TweetSerilizer(qs, many=True)
+    serializer = TweetSerializer(qs, many=True)
     return Response(serializer.data)
 
 
@@ -57,8 +65,48 @@ def tweets_detail_view(request, tweet_id, *args, **kwargs):
     if not qs.exists():
         return Response({}, status=400)
     obj = qs.first()
-    serializer = TweetSerilizer(obj)
+    serializer = TweetSerializer(obj)
     return Response(serializer.data, status=200)
+
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def tweets_delete_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.filter(id=tweet_id)
+    if not qs.exists():
+        return Response({}, status=400)
+    qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
+    if not qs.exists():
+        return Response({'message': 'You cannot delete this post'}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({'message': 'Post removed'}, status=200)
+
+
+#  From 5h:05min onwards
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def tweets_action_view(request, *args, **kwargs):
+    # Actions such as Like, unlike, comment
+    serializer = TweetActionSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        data = serializer.validated_data
+        tweet_id = data.get("id")
+        action = data.get("action")
+
+        qs = Tweet.objects.filter(id=tweet_id)
+        if not qs.exists():
+            return Response({}, status=404)
+        obj = qs.first()
+        if action == "like":
+            obj.likes.add(request.user)  # Same can be applied for comments
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
+        elif action == "unlike":
+            obj.likes.remove(request.user)
+        elif action == "comment":
+            pass
+    return Response({'message': 'Post removed'}, status=200)
 
 
 def create_post_view_django(request, *args, **kwargs):
@@ -79,7 +127,7 @@ def create_post_view_django(request, *args, **kwargs):
         if request.is_ajax():
             return JsonResponse(obj.serialize(), status=201)  # 201 == created items
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
-             return redirect(next_url)
+            return redirect(next_url)
         form = TweetForm()
     if form.errors:
         if request.is_ajax():
