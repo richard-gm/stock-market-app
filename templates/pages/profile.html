@@ -116,7 +116,7 @@ function handleTweetCreateFormDidSumbit(event) {
 const tweetCreateFormEl = document.getElementById("tweet-create-form")
 tweetCreateFormEl.addEventListener("submit", handleTweetCreateFormDidSumbit)
 
-
+// Get all Tweets elements on a container
 const tweetsContainerElement = document.getElementById("tweets")
 
 function loadTweets(tweetsElement) {
@@ -179,7 +179,7 @@ function LikeBtn(tweet) {
 
 function CommentBtn(tweet) {
     return "<button class='btn btn-outline-success btn-sm' onclick=handleTweetActionBtn(" +
-    tweet.id + "," + tweet.likes + ",'retweet')>Comment</button>"
+    tweet.id + "," + tweet.likes + ",'comment')>Comment</button>"
 }
 
 function formatTweetElement(tweet) {

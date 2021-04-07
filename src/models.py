@@ -29,6 +29,7 @@ class TweetComment(models.Model):
 
 # table for content of each tweet
 class Tweet(models.Model):
+    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # One user only
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='images/', blank=True, null=True)
@@ -37,6 +38,10 @@ class Tweet(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+    @property   # 4h 37min
+    def is_retweet(self):
+        return self.parent != None #if the parent is equal to none then is a retweet (bolan)
 
     def serialize(self):
         return {
