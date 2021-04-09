@@ -11,20 +11,21 @@ from .models import Tweet
 User = get_user_model()
 
 
+# 4H50min Unit Testing setup
 class TweetTestCase(TestCase):
-    def setUp(self):
+    def setUp(self):  # DB data goes only here
         self.user = User.objects.create_user(username='Richard', password='somepassword')
         self.userb = User.objects.create_user(username='Andres', password='somepassword2')
-        Tweet.objects.create(content="my first tweet",
+        Tweet.objects.create(content="my first tweet - user 1",
                              user=self.user)
-        Tweet.objects.create(content="my second tweet",
+        Tweet.objects.create(content="my second tweet - user 1",
                              user=self.user)
-        Tweet.objects.create(content="my third tweet",
+        Tweet.objects.create(content="my first tweet - user 2",
                              user=self.userb)
-        self.currentCount = Tweet.objects.all().count()
+        self.currentCount = Tweet.objects.all().count()  # counting how many tweets are
 
     def test_tweet_created(self):
-        tweet_obj = Tweet.objects.create(content="my second tweet",
+        tweet_obj = Tweet.objects.create(content="my fourth tweet",
                                          user=self.user)
         self.assertEqual(tweet_obj.id, 4)
         self.assertEqual(tweet_obj.user, self.user)
@@ -65,7 +66,7 @@ class TweetTestCase(TestCase):
                                {"id": 2, "action": "unlike"})
         self.assertEqual(response.status_code, 200)
         like_count = response.json().get("likes")
-        self.assertEqual(like_count, None)  # response returns None as the unlike action removes the object
+        self.assertEqual(like_count, 0)
 
     def test_action_retweet(self):
         client = self.get_client()
@@ -75,7 +76,7 @@ class TweetTestCase(TestCase):
         data = response.json()
         new_tweet_id = data.get("id")
         self.assertNotEqual(2, new_tweet_id)
-        self.assertEqual(self.currentCount + 1, new_tweet_id)
+        self.assertEqual(self.currentCount + 1, new_tweet_id)  # adding new tweet count
 
     def test_tweet_create_api_view(self):
         request_data = {"content": "This is my test tweet"}
@@ -88,11 +89,11 @@ class TweetTestCase(TestCase):
 
     def test_tweet_detail_api_view(self):
         client = self.get_client()
-        response = client.get("/profile/api/tweets/1/")  # notice that this post has id 3 as post 1 and 2 were deleted
+        response = client.get("/profile/api/tweets/3/")  # change the ID to test each post
         self.assertEqual(response.status_code, 200)
         data = response.json()
         _id = data.get("id")
-        self.assertEqual(_id, 3) # Post from DB have been deleted so ID id.1 is now id.3
+        self.assertEqual(_id, 3)  # Post from DB have been deleted so ID id.1 is now id.3
 
     def test_tweet_delete_api_view(self):
         client = self.get_client()
