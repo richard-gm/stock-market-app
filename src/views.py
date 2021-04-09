@@ -78,7 +78,7 @@ def tweets_detail_view(request, tweet_id, *args, **kwargs):
 def tweets_delete_view(request, tweet_id, *args, **kwargs):
     qs = Tweet.objects.filter(id=tweet_id)
     if not qs.exists():
-        return Response({}, status=400)
+        return Response({}, status=404)  # Erros response as no Tweet/post ID has been founded
     qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
     if not qs.exists():
         return Response({'message': 'You cannot delete this post'}, status=401)
@@ -100,7 +100,7 @@ def tweets_action_view(request, *args, **kwargs):
         content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
         if not qs.exists():
-            return Response({}, status=404)
+            return Response({'Fail2'}, status=404)
         obj = qs.first()
         if action == "like":
             obj.likes.add(request.user)  # Same can be applied for comments
@@ -116,7 +116,7 @@ def tweets_action_view(request, *args, **kwargs):
             )
             print(new_tweet.parent)
             serializer = TweetSerializer(new_tweet)
-            return Response(serializer.data, status=200)
+            return Response(serializer.data, status=201)
         return Response({}, status=200)
 
 
