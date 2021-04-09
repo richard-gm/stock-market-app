@@ -1,4 +1,5 @@
-# React
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # dependencies
 /node_modules
 /.pnp
@@ -20,12 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Django
-/django-env
-/admin=admin1234 (password)
-/.vscode
-Pipfile
-Pipfile.lock
-/.vscode
-.idea
