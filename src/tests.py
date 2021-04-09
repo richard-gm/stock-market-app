@@ -93,14 +93,14 @@ class TweetTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         _id = data.get("id")
-        self.assertEqual(_id, 3)  # Post from DB have been deleted so ID id.1 is now id.3
+        self.assertEqual(_id, 3)  # filtered by post id in the route /profile/api/tweets/3/
 
     def test_tweet_delete_api_view(self):
         client = self.get_client()
         response = client.delete("/profile/api/tweets/1/delete/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)  # Getting success response after deleting post
         client = self.get_client()
         response = client.delete("/profile/api/tweets/1/delete/")
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)  # already deleted so it cannot longer delete it
         response_incorrect_owner = client.delete("/profile/api/tweets/3/delete/")
         self.assertEqual(response_incorrect_owner.status_code, 401)
