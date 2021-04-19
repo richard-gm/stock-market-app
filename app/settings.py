@@ -25,7 +25,7 @@ SECRET_KEY = 'u=_q*at*+46@wgqz-hwh8%kt%74fjro#vbv&6r29gvp0h7ngt+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh']
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
 LOGIN_URL = "/login"
 
 # Max length for Post made by users
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party API
     'rest_framework',
+    'corsheaders',
     # Internal
     'src',
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,7 +128,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
-
+# IMPORTANT - add URLs below so the front end can get access to the backend
+CORS_ORIGIN_ALLOW_ALL = True  # Any website has access to the local API
+CORS_URLS_REGEX = r'^/profile/api/.*$'
 
 # JSON rendered for Production
 DEFAULT_RENDERER_CLASSES = [

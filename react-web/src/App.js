@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react"; // run HTTP request from the backend
 import logo from './logo.svg';
 import './App.css';
-
+//5h20min React tutorial
 function loadTweets(callback) {
     const xhr = new XMLHttpRequest() // requesting data as HTTP
     const method = 'GET' // "POST"
-    const url = "http://127.0.0.1:8000/profile/api/tweets/"   // Goes to this url
+    const url = "http://localhost:8000/profile/api/tweets/"   // Goes to this url
     const responseType = "json"
     xhr.responseType = responseType
     xhr.open(method, url)
