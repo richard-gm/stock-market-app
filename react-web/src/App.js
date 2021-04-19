@@ -19,6 +19,24 @@ function loadTweets(callback) {
   xhr.send()
 }
 
+function ActionBtn(props) {
+    const {tweet, action} = props
+    const className = props.className ? this.props.className : 'btn btn-primary btn-sm'
+        return action.type === 'like' ? <button className={className}> {tweet.likes} Likes </button> : null
+}
+
+function Tweet(props) { // Returns list of tweets
+    const {tweet} = props
+    const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
+    return <div className={className}>
+        <p>{tweet.id} - {tweet.content}</p>
+        <div className='btn btn-group'>
+            <ActionBtn tweet={tweet} action={{type:'like'}}/>
+        </div>
+    </div>
+}
+
+
 function App() {
   const [tweets, setTweets] = useState([])
   useEffect(() => {
@@ -39,11 +57,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <p>
-          {tweets.map((tweet, index)=>{
-            return <li>{tweet.content}</li>
+        <div>
+          {tweets.map((item, index)=>{
+            return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`} />
           })}
-        </p>
+        </div>
         <a
           className="App-link"
           href="https://reactjs.org"
