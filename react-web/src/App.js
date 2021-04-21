@@ -1,7 +1,7 @@
 import React from "react"; // run HTTP request from the backend
 import logo from './logo.svg';
 import './App.css';
-import {TweetList} from "./tweets-modules";
+import {TweetsComponent} from "./tweets-modules";
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <TweetList/>
+          <TweetsComponent/>
         </div>
         <a
           className="App-link"
