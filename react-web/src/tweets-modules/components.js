@@ -27,32 +27,33 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
                 <button type='submit' className='btn btn-primary my-3'>Tweet</button>
             </form>
         </div>
-        <TweetList newTweets={newTweets}/>
+        <TweetsList newTweets={newTweets} />
     </div>
 }
 //6h13
-export function TweetList(props) {
-    const [tweetsInit, setTweetsInit] = useState([]) //Monitoring this changes
+export function TweetsList(props) {
+    const [tweetsInit, setTweetsInit] = useState([]) // Monitor changes
     const [tweets, setTweets] = useState([])
     useEffect(()=>{
-        const finalList = [...props.newTweets].concat(tweetsInit) //
-        if (finalList.length !== tweets.length){
-            setTweets(finalList)
+        const final = [...props.newTweets].concat(tweetsInit)
+        if (final.length !== tweets.length) {
+            setTweets(final)
         }
     }, [props.newTweets, tweets, tweetsInit])
+
     useEffect(() => {
         const myCallback = (response, status) => {
-            console.log(response, status) // REMOVE THIS IN THE FUTURE TODO
-            if (status === 200) {
+            if (status === 200){
                 setTweetsInit(response)
             } else {
                 alert("There was an error")
             }
         }
         loadTweets(myCallback)
-    }, [tweetsInit])
-    return tweets.map((item, index) => { // Returing tweets items - REMOVE the key in the furute so it doest not show the ID TODO
-        return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
+    },  [tweetsInit])
+    // Returning tweets items - REMOVE the key in the furute so it doest not show the ID TODO
+    return tweets.map((item, index)=>{
+        return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`} />
     })
 }
 
@@ -61,7 +62,8 @@ export function ActionBtn(props) {
     const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0)
     const [userLike, setUserLike] = useState(tweet.userLike === true ? true : false)
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
-    const actionDisplay = action.display ? action.display : 'action'
+    const actionDisplay = action.display ? action.display : 'Action'
+
     const handleClick = (event) => {
         event.preventDefault()
         if (action.type === 'like') {
@@ -69,13 +71,13 @@ export function ActionBtn(props) {
                 setLikes(likes - 1)
                 setUserLike(false)
             } else {
-                setLikes(tweet.likes + 1)
+                setLikes(likes + 1)
                 setUserLike(true)
             }
         }
     }
     const display = action.type === 'like' ? `${likes} ${actionDisplay}` : actionDisplay
-    return <button className={className} onClick={handleClick}> {display} </button>
+    return <button className={className} onClick={handleClick}>{display}</button>
 }
 
 export function Tweet(props) { // Returns list of tweets
@@ -84,11 +86,9 @@ export function Tweet(props) { // Returns list of tweets
     return <div className={className}>
         <p>{tweet.id} - {tweet.content}</p>
         <div className='btn btn-group'>
-            <ActionBtn tweet={tweet} action={{type: 'like', display: 'Likes'}}/>
-            <ActionBtn tweet={tweet} action={{type: 'unlike', display: 'Unlikes'}}/>
-            <ActionBtn tweet={tweet} action={{type: 'retweet', display: 'Retweet'}}/>
-
-
+            <ActionBtn tweet={tweet} action={{type: "like", display:"Likes"}}/>
+            <ActionBtn tweet={tweet} action={{type: "unlike", display:"Unlike"}}/>
+            <ActionBtn tweet={tweet} action={{type: "retweet", display:""}}/>
         </div>
     </div>
 }

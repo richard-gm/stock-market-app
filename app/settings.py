@@ -31,7 +31,7 @@ LOGIN_URL = "/login"
 # Max length for Post made by users
 MAX_LENGTH = 240
 # Max tweet actions
-TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment']
+TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment', 'retweet']
 # Application definition
 
 INSTALLED_APPS = [
@@ -128,6 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static-root")  # It emulate a static version of the server
+
 # IMPORTANT - add URLs below so the front end can get access to the backend
 CORS_ORIGIN_ALLOW_ALL = True  # Any website has access to the local API
 CORS_URLS_REGEX = r'^/profile/api/.*$'
