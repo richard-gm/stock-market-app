@@ -34,6 +34,7 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
 export function TweetsList(props) {
     const [tweetsInit, setTweetsInit] = useState([]) // Monitor changes
     const [tweets, setTweets] = useState([])
+    const [tweetsDidSet, setTweetsDidSet] = useState(false)
     useEffect(()=>{
         const final = [...props.newTweets].concat(tweetsInit)
         if (final.length !== tweets.length) {
@@ -42,15 +43,18 @@ export function TweetsList(props) {
     }, [props.newTweets, tweets, tweetsInit])
 
     useEffect(() => {
-        const myCallback = (response, status) => {
-            if (status === 200){
-                setTweetsInit(response)
-            } else {
-                alert("There was an error")
+        if (tweetsDidSet === false){
+            const myCallback = (response, status) => {
+                if (status === 200){
+                    setTweetsInit(response)
+                    setTweetsDidSet(true)
+                } else {
+                    alert("There was an error")
+                }
             }
+            loadTweets(myCallback)
         }
-        loadTweets(myCallback)
-    },  [tweetsInit])
+    },  [tweetsInit, tweetsDidSet, setTweetsDidSet])
     // Returning tweets items - REMOVE the key in the furute so it doest not show the ID TODO
     return tweets.map((item, index)=>{
         return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`} />
