@@ -31,7 +31,7 @@ from src.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('react/', TemplateView.as_view(template_name='react.html')),
+    path('react/', TemplateView.as_view(template_name='react_via_dj.html')),
     path('', home_view),
     path('dashboard', dashboard),
     path('profile/', profile),
