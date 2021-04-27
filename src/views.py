@@ -49,7 +49,7 @@ def profile(request, *args, **kwargs):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_post_view(request, *args, **kwargs):
-    serializer = TweetCreateSerializer(data=request.POST)
+    serializer = TweetCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):  # raise_exeption uses the build-in Response function to handle issues
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)

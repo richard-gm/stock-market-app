@@ -5,19 +5,26 @@ import {loadTweets, createTweet} from "../lookup";
 export function TweetsComponent(props) { // Adding Text area so user can publish new posts
     const textAreaRef = React.createRef()
     const [newTweets, setNewTweets] = useState([])
+
+    // Backend API response handler
+    const handleBackendUpdate = (response, status) => { // we get the response in a JSON format (DEBUG)
+        let tempNewTweets = [...newTweets]
+        console.log(response, status)
+        if (status === 201){
+            tempNewTweets.unshift(response) // newest post will be displayed first using the unshift method
+            setNewTweets(tempNewTweets)
+        }else {
+            console.log(response)
+            alert("An error occurred, please try again")
+        }
+    }
+
+    // Backend API request handler
     const handleSubmit = (event) => {
         event.preventDefault()
         const newVal = textAreaRef.current.value
-        let tempNewTweets = [...newTweets]
-        createTweet(newVal, (response, status)=>{ // we get the response in a JSON format (DEBUG)
-            if (status === 201){
-                tempNewTweets.unshift(response) // newest post will be displayed first using the unshift method
-            }else {
-                console.log(response)
-                alert("An error occurred, please try again")
-            }
-        })
-        setNewTweets(tempNewTweets)
+        console.log('new value: ', newVal, )
+        createTweet(newVal, handleBackendUpdate())
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
