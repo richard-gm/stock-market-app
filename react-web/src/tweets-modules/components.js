@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 
-import {apiTweetCreate, apiTweetList} from "./lookup";
+import {apiTweetCreate, apiTweetList, apiTweetAction} from "./lookup";
 
 export function TweetsComponent(props) { // Adding Text area so user can publish new posts
     const textAreaRef = React.createRef()
@@ -63,8 +63,8 @@ export function TweetsList(props) {
             }
             apiTweetList(handleTweetListLookup)
         }
-    },  [tweetsInit, tweetsDidSet, setTweetsDidSet])
-    // Returning tweets items - REMOVE the key in the furute so it doest not show the ID TODO
+    }, [tweetsInit, tweetsDidSet, setTweetsDidSet])
+    // Returning tweets items - REMOVE the key in the future so it doest not show the ID TODO
     return tweets.map((item, index)=>{
         return <Tweet tweet={item} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`} />
     })
@@ -72,36 +72,46 @@ export function TweetsList(props) {
 
 export function ActionBtn(props) {
     const {tweet, action} = props
+    const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
     const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0)
-    const [userLike, setUserLike] = useState(tweet.userLike === true ? true : false)
-    const className = props.className ? props.className : 'btn btn-primary btn-sm'
+     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'
 
+    const handleActionBackendEvent = (response, status) =>{
+        console.log(response, status)
+        if (status === 200){
+            setLikes(response.likes)
+        }
+    }
     const handleClick = (event) => {
         event.preventDefault()
-        if (action.type === 'like') {
-            if (userLike === true) { // if user liked the post, remove it
-                setLikes(likes - 1)
-                setUserLike(false)
-            } else {
-                setLikes(likes + 1)
-                setUserLike(true)
-            }
-        }
+        apiTweetAction(tweet.id, action.type, handleActionBackendEvent)
     }
     const display = action.type === 'like' ? `${likes} ${actionDisplay}` : actionDisplay
     return <button className={className} onClick={handleClick}>{display}</button>
+}
+export function ParentTweet(props){
+    const {tweet} = props
+    return tweet.parent ? <div className='row'>
+        <div className='col-11 mx-auto p-3 border rounded'>
+            <p className='mb-0 text-muted small'>Retweet</p>
+            <Tweet className={' '} tweet={tweet.parent} />
+        </div>
+    </div> : null
 }
 
 export function Tweet(props) { // Returns list of tweets
     const {tweet} = props
     const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
     return <div className={className}>
-        <p>{tweet.id} - {tweet.content}</p>
+        <div>
+            <p>{tweet.id} - {tweet.content}</p>
+            <ParentTweet tweet={tweet} />
+        </div>
         <div className='btn btn-group'>
             <ActionBtn tweet={tweet} action={{type: "like", display:"Likes"}}/>
             <ActionBtn tweet={tweet} action={{type: "unlike", display:"Unlike"}}/>
-            <ActionBtn tweet={tweet} action={{type: "retweet", display:""}}/>
+            <ActionBtn tweet={tweet} action={{type: "retweet", display:"Retweet"}}/>
         </div>
     </div>
 }
