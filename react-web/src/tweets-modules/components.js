@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 
-import {loadTweets, createTweet} from "../lookup";
+import {apiTweetCreate, apiTweetList} from "./lookup";
 
 export function TweetsComponent(props) { // Adding Text area so user can publish new posts
     const textAreaRef = React.createRef()
@@ -24,7 +24,7 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
         event.preventDefault()
         const newVal = textAreaRef.current.value
         console.log('new value: ', newVal, )
-        createTweet(newVal, handleBackendUpdate())
+        apiTweetCreate(newVal, handleBackendUpdate())
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
@@ -53,7 +53,7 @@ export function TweetsList(props) {
 
     useEffect(() => {
         if (tweetsDidSet === false){
-            const myCallback = (response, status) => {
+            const handleTweetListLookup = (response, status) => {
                 if (status === 200){
                     setTweetsInit(response)
                     setTweetsDidSet(true)
@@ -61,7 +61,7 @@ export function TweetsList(props) {
                     alert("There was an error")
                 }
             }
-            loadTweets(myCallback)
+            apiTweetList(handleTweetListLookup)
         }
     },  [tweetsInit, tweetsDidSet, setTweetsDidSet])
     // Returning tweets items - REMOVE the key in the furute so it doest not show the ID TODO

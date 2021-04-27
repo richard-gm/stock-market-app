@@ -14,7 +14,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function lookup(method, endpoint, callback, data){
+export function backendLookup(method, endpoint, callback, data){
     let jsonData;
     if (data){
         jsonData = JSON.stringify(data)
@@ -41,13 +41,3 @@ function lookup(method, endpoint, callback, data){
     console.log(jsonData)
     xhr.send(jsonData)
 }
-//6h:40min
-export function createTweet(newTweet, callback){ // Lookup method for POSTING new tweets
-    lookup("POST", "/tweets/create/", callback, {content: newTweet})
-}
-
-
-//5h20min React tutorial
-export function loadTweets(callback) {
-    lookup("GET", "/tweets/", callback)
-  }
