@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 
-import {loadTweets} from "../lookup";
+import {loadTweets, createTweet} from "../lookup";
 
 export function TweetsComponent(props) { // Adding Text area so user can publish new posts
     const textAreaRef = React.createRef()
@@ -9,11 +9,13 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
         event.preventDefault()
         const newVal = textAreaRef.current.value
         let tempNewTweets = [...newTweets]
-        tempNewTweets.unshift({ // newest post will be displayed first using the unshift method
-            // push this to a server using servercall function TODO
-            content: newVal,
-            likes: 0,
-            id: 121212
+        createTweet(newVal, (response, status)=>{ // we get the response in a JSON format (DEBUG)
+            if (status === 201){
+                tempNewTweets.unshift(response) // newest post will be displayed first using the unshift method
+            }else {
+                console.log(response)
+                alert("An error occurred, please try again")
+            }
         })
         setNewTweets(tempNewTweets)
         textAreaRef.current.value = ''
