@@ -24,7 +24,7 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
         event.preventDefault()
         const newVal = textAreaRef.current.value
         console.log('new value: ', newVal, )
-        apiTweetCreate(newVal, handleBackendUpdate())
+        apiTweetCreate(newVal, handleBackendUpdate)
         textAreaRef.current.value = ''
     }
     return <div className={props.className}>
@@ -71,16 +71,15 @@ export function TweetsList(props) {
 }
 
 export function ActionBtn(props) {
-    const {tweet, action} = props
-    const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
-    const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0)
-     const className = props.className ? props.className : 'btn btn-primary btn-sm'
+    const {tweet, action, didPerformAction} = props
+    const likes = tweet.likes ? tweet.likes : 0
+    const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'
 
     const handleActionBackendEvent = (response, status) =>{
         console.log(response, status)
-        if (status === 200){
-            setLikes(response.likes)
+        if ((status === 200 || status === 201) && didPerformAction){
+            didPerformAction(response, status)
         }
     }
     const handleClick = (event) => {
@@ -102,16 +101,27 @@ export function ParentTweet(props){
 
 export function Tweet(props) { // Returns list of tweets
     const {tweet} = props
+    const [actionTweet, setActionTweet] = useState(props.tweet ? props.tweet : null)
     const className = props.className ? props.className : 'col-10 mx-auto col-md-6'
+
+    const handlePerformAction = (newActionTweet, status) => {
+        if (status === 200) {
+            setActionTweet(newActionTweet)
+        } else if (status ===201){
+            // test
+            console.log(status)
+        }
+    }
     return <div className={className}>
         <div>
             <p>{tweet.id} - {tweet.content}</p>
             <ParentTweet tweet={tweet} />
         </div>
-        <div className='btn btn-group'>
-            <ActionBtn tweet={tweet} action={{type: "like", display:"Likes"}}/>
-            <ActionBtn tweet={tweet} action={{type: "unlike", display:"Unlike"}}/>
-            <ActionBtn tweet={tweet} action={{type: "retweet", display:"Retweet"}}/>
-        </div>
+        {actionTweet && <div className='btn btn-group'>
+                <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "like", display: "Likes"}}/>
+                <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "unlike", display: "Unlike"}}/>
+                <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "retweet", display: "Retweet"}}/>
+            </div>
+        }
     </div>
 }
