@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react"
 import {apiTweetCreate, apiTweetList, apiTweetAction} from "./lookup";
 
 export function TweetsComponent(props) { // Adding Text area so user can publish new posts
+    console.log(props)
     const textAreaRef = React.createRef()
     const [newTweets, setNewTweets] = useState([])
 
@@ -31,7 +32,6 @@ export function TweetsComponent(props) { // Adding Text area so user can publish
         <div className='col-12 mb-3'>
             <form onSubmit={handleSubmit}>
                 <textarea ref={textAreaRef} required={true} className='form-control' name='tweet'>
-
                 </textarea>
                 <button type='submit' className='btn btn-primary my-3'>Tweet</button>
             </form>
@@ -50,7 +50,6 @@ export function TweetsList(props) {
             setTweets(final)
         }
     }, [props.newTweets, tweets, tweetsInit])
-
     useEffect(() => {
         if (tweetsDidSet === false){
             const handleTweetListLookup = (response, status) => {
@@ -65,9 +64,8 @@ export function TweetsList(props) {
         }
     }, [tweetsInit, tweetsDidSet, setTweetsDidSet])
     const handleDidRetweet = (newTweet) => {
-        const updateTweetsInit = [... tweetsInit]
+        const updateTweetsInit = [...tweetsInit]
         updateTweetsInit.unshift(newTweet)
-
         const updateFinalTweet = [...tweets]
         updateFinalTweet.unshift(tweets)
         setTweets(updateFinalTweet)
@@ -87,7 +85,6 @@ export function ActionBtn(props) {
     const likes = tweet.likes ? tweet.likes : 0
     const className = props.className ? props.className : 'btn btn-primary btn-sm'
     const actionDisplay = action.display ? action.display : 'Action'
-
     const handleActionBackendEvent = (response, status) =>{
         console.log(response, status)
         if ((status === 200 || status === 201) && didPerformAction){
