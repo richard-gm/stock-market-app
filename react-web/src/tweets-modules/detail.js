@@ -19,7 +19,7 @@ export function Tweet(props) { // Returns list of tweets
     const handlePerformAction = (newActionTweet, status) => {
         if (status === 200) {
             setActionTweet(newActionTweet)
-        } else if (status ===201){
+        } else if (status === 201) {
             if (didRetweet) {
                 didRetweet(newActionTweet)
                 console.log(status)
@@ -31,10 +31,10 @@ export function Tweet(props) { // Returns list of tweets
             <p>{tweet.id} - {tweet.content}</p>
             <ParentTweet tweet={tweet} />
         </div>
-        {( actionTweet && hideActions !== true) && <div className='btn btn-group'>
-            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "like", display: "Likes"}}/>
-            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "unlike", display: "Unlike"}}/>
-            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "retweet", display: "Retweet"}}/>
+        {(actionTweet && hideActions !== true) && <div className='btn btn-group'>
+            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "like", display:"Likes"}}/>
+            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "unlike", display:"Unlike"}}/>
+            <ActionBtn tweet={actionTweet} didPerformAction={handlePerformAction} action={{type: "retweet", display:"Retweet"}}/>
         </div>
         }
     </div>

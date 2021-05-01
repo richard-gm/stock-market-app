@@ -13,6 +13,7 @@ export function TweetsList(props) {
             setTweets(final)
         }
     }, [props.newTweets, tweets, tweetsInit])
+
     useEffect(() => {
         if (tweetsDidSet === false){
             const handleTweetListLookup = (response, status) => {
@@ -29,9 +30,10 @@ export function TweetsList(props) {
     const handleDidRetweet = (newTweet) => {
         const updateTweetsInit = [...tweetsInit]
         updateTweetsInit.unshift(newTweet)
-        const updateFinalTweet = [...tweets]
-        updateFinalTweet.unshift(tweets)
-        setTweets(updateFinalTweet)
+        setTweetsInit(updateTweetsInit)
+        const updateFinalTweets = [...tweets]
+        updateFinalTweets.unshift(tweets)
+        setTweets(updateFinalTweets)
     }
     // Returning tweets items - REMOVE the key in the future so it doest not show the ID TODO
     return tweets.map((item, index)=>{

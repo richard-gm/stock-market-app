@@ -1,3 +1,4 @@
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -14,7 +15,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-export function backendLookup(method, endpoint, callback, data){
+export function backendLookup(method, endpoint, callback, data) {
     let jsonData;
     if (data){
         jsonData = JSON.stringify(data)
@@ -25,6 +26,7 @@ export function backendLookup(method, endpoint, callback, data){
     const csrftoken = getCookie('csrftoken');
     xhr.open(method, url)
     xhr.setRequestHeader("Content-Type", "application/json")
+    // user's token
     if (csrftoken){
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
