@@ -17,27 +17,24 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.views.generic import TemplateView
 
 from src.views import (
     home_view,
-    tweets_detail_view,
-    tweets_list_view,
     profile,
-    create_post_view,
     portfolio,
-    dashboard
+    dashboard,
+    local_tweets_list_view,
+    local_tweets_detail_view,
+    local_tweets_profile_view,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('react/', TemplateView.as_view(template_name='react_via_dj.html')),
-    path('', home_view),
+    path('', local_tweets_list_view),
+    path('<int:tweet_id>', local_tweets_detail_view),
+    path('profile/<str:username>', local_tweets_profile_view),
     path('dashboard', dashboard),
     path('profile/', profile),
-    path('profile/create_post', create_post_view),
-    path('tweets/', tweets_list_view),
-    path('tweets/<int:tweet_id>', tweets_detail_view),
     path('portfolio', portfolio),
     path('profile/api/tweets/', include('src.urls')),  # API endpoints on this file
 ]

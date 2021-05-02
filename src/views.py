@@ -20,11 +20,23 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 # Create your views here.
-
-
 def home_view(request, *args, **kwargs):
-    print(request.user)
-    return render(request, "pages/home.html", context={}, status=200)
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+    return render(request, "pages/profile.html", context={"username": username}, status=200)
+
+
+def local_tweets_list_view(request, *args, **kwargs):
+    return render(request, "tweets-files/list.html")
+
+
+def local_tweets_detail_view(request, tweet_id, *args, **kwargs):
+    return render(request, "tweets-files/details.html", context={"tweet_id": tweet_id})
+
+
+def local_tweets_profile_view(request, username, *args, **kwargs):
+    return render(request, "tweets-files/profiles.html", context={"profile_username": username}, status=200)
 
 
 def login_page(request, *args, **kwargs):
