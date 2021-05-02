@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # Internal
     'src',
+    'accounts'
 
 ]
 

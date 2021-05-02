@@ -28,7 +28,7 @@ def tweets_profile_view(request, username, *args, **kwargs):
 
 def login_page(request, *args, **kwargs):
     print(request.user)
-    return render(request, "pages/login.html", context={}, status=200)
+    return render(request, "pages/auth.html", context={}, status=200)
 
 
 def portfolio(request, *args, **kwargs):
