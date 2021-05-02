@@ -28,16 +28,21 @@ export function backendLookup(method, endpoint, callback, data) {
     xhr.setRequestHeader("Content-Type", "application/json")
     // user's token
     if (csrftoken){
-        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        // xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
         xhr.setRequestHeader("X-CSRFToken", csrftoken)
     }
 
     xhr.onload = function() {
+        if (xhr.status === 403){
+            const details = xhr.response.detail
+            if (details === 'Authentication credentials were not provided.'){
+              window.location.href = "/login?showLoginRequired=true"
+            }
+        }
         callback(xhr.response, xhr.status)
     }
     xhr.onerror = function (e) {
-        console.log(e)
         callback({"message": "The request was an error"}, 400)
     }
     console.log(jsonData)
