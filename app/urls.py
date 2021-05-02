@@ -23,20 +23,20 @@ from src.views import (
     profile,
     portfolio,
     dashboard,
-    local_tweets_list_view,
-    local_tweets_detail_view,
-    local_tweets_profile_view,
+    tweets_list_view,
+    tweets_detail_view,
+    tweets_profile_view,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', local_tweets_list_view),
-    path('<int:tweet_id>', local_tweets_detail_view),
-    path('profile/<str:username>', local_tweets_profile_view),
+    path('', tweets_list_view),
+    path('<int:tweet_id>', tweets_detail_view),
+    path('profile/<str:username>', tweets_profile_view),
     path('dashboard', dashboard),
     path('profile/', profile),
     path('portfolio', portfolio),
-    path('profile/api/tweets/', include('src.urls')),  # API endpoints on this file
+    path('profile/api/tweets/', include('src.api.urls')),  # API endpoints on this file
 ]
 
 if settings.DEBUG:
