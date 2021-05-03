@@ -21,7 +21,7 @@ export function backendLookup(method, endpoint, callback, data) {
         jsonData = JSON.stringify(data)
     }
     const xhr = new XMLHttpRequest() // requesting data as HTTP
-    const url = `http://localhost:8000/profile/api${endpoint}`   // Goes to this url
+    const url = `http://localhost:8000/api${endpoint}`   // Goes to this url
     xhr.responseType = "json"
     const csrftoken = getCookie('csrftoken');
     xhr.open(method, url)

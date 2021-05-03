@@ -22,10 +22,6 @@ def tweets_detail_view(request, tweet_id, *args, **kwargs):
     return render(request, "tweets-files/details.html", context={"tweet_id": tweet_id})
 
 
-def tweets_profile_view(request, username, *args, **kwargs):
-    return render(request, "tweets-files/profiles.html", context={"profile_username": username}, status=200)
-
-
 def login_page(request, *args, **kwargs):
     print(request.user)
     return render(request, "pages/auth.html", context={}, status=200)

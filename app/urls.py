@@ -31,7 +31,6 @@ from src.views import (
     dashboard,
     tweets_list_view,
     tweets_detail_view,
-    tweets_profile_view,
 )
 
 urlpatterns = [
@@ -41,11 +40,10 @@ urlpatterns = [
     path('logout/', logout_view),
     path('register/', register_view),
     path('<int:tweet_id>', tweets_detail_view),
-    path('profile/<str:username>', tweets_profile_view),
     path('dashboard', dashboard),
-    path('profile/', profile),
+    re_path(r'profiles?/', include('profiles.urls')),
     path('portfolio', portfolio),
-    path('profile/api/tweets/', include('src.api.urls')),  # API endpoints on this file
+    path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
 ]
 
 if settings.DEBUG:
