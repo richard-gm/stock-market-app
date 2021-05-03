@@ -1,3 +1,4 @@
+import random
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -14,13 +15,13 @@ from ..models import Profile
 User = get_user_model()
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
-
-# @api_view(['GET'])  # http method the client == POST
+# @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
-# def user_follow_view(request, username,  *args, **kwargs):
+# def user_profile_detail_view(request, username, *args, **kwargs):
 #     current_user = request.user
-#     # to_follow_user = //
+#     to_follow_user = ??
 #     return Response({}, status=200)
+
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -36,7 +37,6 @@ def user_follow_view(request, username, *args, **kwargs):
     profile = other.profile
     data = request.data or {}
     action = data.get("action")
-    print(data)
     if action == "follow":
         profile.followers.add(me)
     elif action == "unfollow":
@@ -45,7 +45,3 @@ def user_follow_view(request, username, *args, **kwargs):
         pass
     current_followers_qs = profile.followers.all()
     return Response({"count": current_followers_qs.count()}, status=200)
-
-
-
-

@@ -7,5 +7,5 @@ Client Side
 Base ENDPOINT /api/profiles/
 '''
 urlpatterns = [
-    path('<str:username>/follow/', user_follow_view),
+    path('<str:username>/follow', user_follow_view),
 ]
