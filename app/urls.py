@@ -13,26 +13,41 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
+
+from accounts.views import (
+    login_view,
+    logout_view,
+    register_view,
+)
+
 from src.views import (
     home_view,
-    tweets_detail_view,
-    tweets_list_view,
     profile,
-    create_post_view,
     portfolio,
-    dashboard
+    dashboard,
+    tweets_list_view,
+    tweets_detail_view,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_view),
+    path('', tweets_list_view),
+    path('login/', login_view),
+    path('logout/', logout_view),
+    path('register/', register_view),
+    path('<int:tweet_id>', tweets_detail_view),
     path('dashboard', dashboard),
-    path('profile/', profile),
-    path('profile/create_post', create_post_view),
-    path('tweets/', tweets_list_view),
-    path('tweets/<int:tweet_id>', tweets_detail_view),
+    re_path(r'profiles?/', include('profiles.urls')),
     path('portfolio', portfolio),
-    path('profile/api/tweets/', include('src.urls')),  # API endpoints on this file
+    path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
+    re_path(r'profiles?/', include('profiles.api.urls')),
+
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_URL)

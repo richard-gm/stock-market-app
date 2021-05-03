@@ -1,0 +1,51 @@
+from django import forms
+from django.contrib.auth import get_user_model
+from .models import Profile, Stocks, WatchList
+
+User = get_user_model()
+
+
+# class UserProfileForm(forms.ModelForm):
+#     location = forms.CharField(required=False)
+#     bio = forms.CharField(required=False)
+#
+#     class Meta:
+#         model = Profile
+#         fields = [
+#             'first_name',
+#             'last_name',
+#             'email'
+#         ]
+
+
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(required=False)
+    last_name = forms.CharField(required=False)
+    email = forms.CharField(required=False)
+
+    class Meta:
+        model = Profile
+        fields = [
+            'location',
+            'bio',
+        ]
+
+
+class StocksForm(forms.ModelForm):
+    class Meta:
+        model = Stocks
+        fields = [
+            'symbol',
+            'nShares',
+            'costPerShare',
+            'totalGain',
+            'totalGainInDollars',
+        ]
+
+
+class WatchListForm(forms.ModelForm):
+    class Meta:
+        model = WatchList
+        fields = [
+            'symbolWatchlist',
+        ]

@@ -30,7 +30,7 @@ class TweetComment(models.Model):
 # table for content of each tweet
 class Tweet(models.Model):
     parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # One user only
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="tweets")  # One user only
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='images/', blank=True, null=True)
     likes = models.ManyToManyField(User, related_name='tweet_user', blank=True, through=TweetLike)  # List of users | can also be applied for comments etc

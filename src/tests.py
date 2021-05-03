@@ -37,32 +37,41 @@ class TweetTestCase(TestCase):
 
     def test_tweet_list(self):
         client = self.get_client()
-        response = client.get("/profile/api/tweets")  # Getting list of posts by user
+        response = client.get("/api/tweets")  # Getting list of posts by user
         print(response.json())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 1)
         print(response.json())
 
+    def test_tweets_related_name(self):
+        user = self.user
+        self.assertEqual(user.tweets.count(), 2)
+
     def test_tweet_list(self):
         client = self.get_client()
-        response = client.get("/profile/api/tweets/")
+        response = client.get("/api/tweets/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.json()), 3)
 
     def test_action_like(self):
         client = self.get_client()
-        response = client.post("/profile/api/tweets/action/",
+        response = client.post("/api/tweets/action/",
                                {"id": 1, "action": "like"})
         self.assertEqual(response.status_code, 200)
         like_count = response.json().get("likes")
         self.assertEqual(like_count, 1)
+        user = self.user
+        my_like_instances_count = user.tweetlike_set.count()
+        self.assertEqual(my_like_instances_count, 1)
+        my_related_like = user.tweet_user.count()
+        self.assertEqual(my_like_instances_count, my_related_like)
 
     def test_action_unlike(self):
         client = self.get_client()
-        response = client.post("/profile/api/tweets/action/",
+        response = client.post("/api/tweets/action/",
                                {"id": 2, "action": "like"})
         self.assertEqual(response.status_code, 200)
-        response = client.post("/profile/api/tweets/action/",
+        response = client.post("/api/tweets/action/",
                                {"id": 2, "action": "unlike"})
         self.assertEqual(response.status_code, 200)
         like_count = response.json().get("likes")
@@ -70,8 +79,8 @@ class TweetTestCase(TestCase):
 
     def test_action_retweet(self):
         client = self.get_client()
-        response = client.post("/profile/api/tweets/action/",
-                               {"id": 2, "action": "comment"})
+        response = client.post("/api/tweets/action/",
+                               {"id": 2, "action": "retweet"})
         self.assertEqual(response.status_code, 201)
         data = response.json()
         new_tweet_id = data.get("id")
@@ -81,7 +90,7 @@ class TweetTestCase(TestCase):
     def test_tweet_create_api_view(self):
         request_data = {"content": "This is my test tweet"}
         client = self.get_client()
-        response = client.post("/profile/api/tweets/create/", request_data)
+        response = client.post("/api/tweets/create/", request_data)
         self.assertEqual(response.status_code, 201)
         response_data = response.json()
         new_tweet_id = response_data.get("id")
@@ -89,18 +98,18 @@ class TweetTestCase(TestCase):
 
     def test_tweet_detail_api_view(self):
         client = self.get_client()
-        response = client.get("/profile/api/tweets/3/")  # change the ID to test each post
+        response = client.get("/api/tweets/3/")  # change the ID to test each post
         self.assertEqual(response.status_code, 200)
         data = response.json()
         _id = data.get("id")
-        self.assertEqual(_id, 3)  # filtered by post id in the route /profile/api/tweets/3/
+        self.assertEqual(_id, 3)  # filtered by post id in the route /api/tweets/3/
 
     def test_tweet_delete_api_view(self):
         client = self.get_client()
-        response = client.delete("/profile/api/tweets/1/delete/")
+        response = client.delete("/api/tweets/1/delete/")
         self.assertEqual(response.status_code, 200)  # Getting success response after deleting post
         client = self.get_client()
-        response = client.delete("/profile/api/tweets/1/delete/")
+        response = client.delete("/api/tweets/1/delete/")
         self.assertEqual(response.status_code, 404)  # already deleted so it cannot longer delete it
-        response_incorrect_owner = client.delete("/profile/api/tweets/3/delete/")
+        response_incorrect_owner = client.delete("/api/tweets/3/delete/")
         self.assertEqual(response_incorrect_owner.status_code, 401)

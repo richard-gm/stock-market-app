@@ -25,13 +25,13 @@ SECRET_KEY = 'u=_q*at*+46@wgqz-hwh8%kt%74fjro#vbv&6r29gvp0h7ngt+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh']
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
 LOGIN_URL = "/login"
 
 # Max length for Post made by users
 MAX_LENGTH = 240
 # Max tweet actions
-TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment']
+TWEET_ACTION_OPTIONS = ['like', 'unlike', 'comment', 'retweet']
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,14 +43,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third Party API
     'rest_framework',
+    'corsheaders',
     # Internal
     'src',
+    'accounts',
+    'profiles',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,21 +131,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static-root")  # It emulate a static version of the server
+
+# IMPORTANT - add URLs below so the front end can get access to the backend
+CORS_ORIGIN_ALLOW_ALL = True  # Any website has access to the local API
+CORS_URLS_REGEX = r'^/profile/api/.*$'
 
 # JSON rendered for Production
 DEFAULT_RENDERER_CLASSES = [
         'rest_framework.renderers.JSONRenderer',
     ]
+
+DEFAULT_AUTHENTICATION_CLASSES = [
+    'rest_framework.authentication.SessionAuthentication'
+]
 # Browsable API enable if debug mode is ON
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
+    # DEFAULT_AUTHENTICATION_CLASSES += [ # Delete this like when running this into prod env
+    #     'app.rest_api.dev.DevAuthentication'
+    # ]
 
 REST_FRAMEWORK = {
 
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
