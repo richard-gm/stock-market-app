@@ -44,6 +44,8 @@ urlpatterns = [
     re_path(r'profiles?/', include('profiles.urls')),
     path('portfolio', portfolio),
     path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
+    re_path(r'profiles?/', include('profiles.api.urls')),
+
 ]
 
 if settings.DEBUG:
