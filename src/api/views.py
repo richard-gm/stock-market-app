@@ -7,7 +7,7 @@ from django.utils.http import is_safe_url
 from rest_framework.response import Response  # Will handle the response rather than senting JSON Obj
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.pagination import PageNumberPagination
 
 from ..forms import TweetForm
 from ..models import Tweet
@@ -33,25 +33,26 @@ def create_post_view(request, *args, **kwargs):
 @api_view(['GET'])
 def tweets_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all()
-    username = request.GET.get('username')  # Getting username from get request
-    if username != None:
-        qs = qs.filter(user__username__iexact=username)
-    serializer = TweetSerializer(qs, many=True)
-    return Response(serializer.data)
+    username = request.GET.get('username')  # ?username=Justin
+    if username is not None:
+        qs = qs.by_username(username)
+    return get_paginated_queryset_response(qs, request)
+
+
+def get_paginated_queryset_response(qs, request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+    paginated_qs = paginator.paginate_queryset(qs, request)
+    serializer = TweetSerializer(paginated_qs, many=True)
+    return paginator.get_paginated_response(serializer.data)  # Response( serializer.data, status=200)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def tweet_feed_view(request, *args, **kwargs):
     user = request.user
-    profiles = user.following.all()
-    followed_users_id = []
-    if profiles.exists():
-        followed_users_id = [x.user.id for x in profiles]
-    followed_users_id.append(user.id)
-    qs = Tweet.objects.filter(user__id__in=followed_users_id).order_by("-timestamp")  # adding a - give us newest first
-    serializer = TweetSerializer(qs, many=True)
-    return Response( serializer.data, status=200)
+    qs = Tweet.objects.feed(user)
+    return get_paginated_queryset_response(qs, request)
 
 
 @api_view(['GET'])
