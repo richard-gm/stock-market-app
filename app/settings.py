@@ -139,7 +139,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static-root")  # It emulate a static versi
 
 # IMPORTANT - add URLs below so the front end can get access to the backend
 CORS_ORIGIN_ALLOW_ALL = True  # Any website has access to the local API
-CORS_URLS_REGEX = r'^/profile/api/.*$'
+CORS_URLS_REGEX = r'^/api/.*$'
 
 # JSON rendered for Production
 DEFAULT_RENDERER_CLASSES = [
