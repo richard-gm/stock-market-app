@@ -34,7 +34,6 @@ export function TweetsComponent(props) {
     </div>
 }
 
-
 export function TweetDetailComponent(props){
     const {tweetId} = props
     const [didLookup, setDidLookup] = useState(false)

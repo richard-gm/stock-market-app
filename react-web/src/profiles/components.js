@@ -1,5 +1,7 @@
 import React from 'react'
 
+
+
 export function UserLink (props) {
     const {username} = props
     const handleUserLink = (event) => {
@@ -9,6 +11,7 @@ export function UserLink (props) {
       {props.children}
   </span>
 }
+
 
 export  function UserDisplay(props){
     const {user, includeFullName} = props
