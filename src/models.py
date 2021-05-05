@@ -14,28 +14,15 @@ class TweetLike(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-class TweetComment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    content = models.TextField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['timestamp']
-
-    def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.name)
-
-
 class TweetQuerySet(models.QuerySet):
     def by_username(self, username):
         return self.filter(user__username__iexact=username)
 
     def feed(self, user):
-        profile_exist = user.following.exists()
+        profiles_exist = user.following.exists()
         followed_users_id = []
-        if profile_exist:
-            followed_users_id = user.following.values_list("user__id", flat=True)
+        if profiles_exist:
+            followed_users_id = user.following.values_list("user__id", flat=True) # [x.user.id for x in profiles]
         return self.filter(
             Q(user__id__in=followed_users_id) |
             Q(user=user)

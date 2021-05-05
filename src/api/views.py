@@ -11,7 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 
 from ..forms import TweetForm
 from ..models import Tweet
-from ..serializer import (
+from ..serializers import (
     TweetSerializer,
     TweetActionSerializer,
     TweetCreateSerializer,
@@ -31,12 +31,61 @@ def create_post_view(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-def tweets_list_view(request, *args, **kwargs):
-    qs = Tweet.objects.all()
-    username = request.GET.get('username')  # ?username=Justin
-    if username is not None:
-        qs = qs.by_username(username)
-    return get_paginated_queryset_response(qs, request)
+def tweets_detail_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.filter(id=tweet_id)  # filtering profile/api/tweets/<ID>/ so it returns only the requested ID
+    if not qs.exists():
+        return Response({}, status=404)
+    obj = qs.first()
+    serializer = TweetSerializer(obj)
+    return Response(serializer.data, status=200)
+
+
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def tweets_delete_view(request, tweet_id, *args, **kwargs):
+    qs = Tweet.objects.filter(id=tweet_id)
+    if not qs.exists():
+        return Response({}, status=404)  # return error as no Tweet/post ID has been founded
+    qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
+    if not qs.exists():
+        return Response({"message": "You cannot delete this tweet"}, status=401)
+    obj = qs.first()
+    obj.delete()
+    return Response({"message": "Tweet removed"}, status=200)
+
+
+#  From 4h:05min onwards
+@api_view(['DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
+def tweets_action_view(request, *args, **kwargs):
+    # Actions such as Like, unlike, comment
+    serializer = TweetActionSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        data = serializer.validated_data
+        tweet_id = data.get("id")
+        action = data.get("action")
+        content = data.get("content")
+        qs = Tweet.objects.filter(id=tweet_id)
+        if not qs.exists():
+            return Response({}, status=404)
+        obj = qs.first()
+        if action == "like":
+            obj.likes.add(request.user)  # Same can be applied for comments
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
+        elif action == "unlike":
+            obj.likes.remove(request.user)
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
+        elif action == "retweet":
+            new_tweet = Tweet.objects.create(
+                user=request.user,
+                parent=obj,
+                content=content,
+            )
+            serializer = TweetSerializer(new_tweet)
+            return Response(serializer.data, status=201)
+    return Response({}, status=200)
 
 
 def get_paginated_queryset_response(qs, request):
@@ -56,62 +105,12 @@ def tweet_feed_view(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-def tweets_detail_view(request, tweet_id, *args, **kwargs):
-    qs = Tweet.objects.filter(id=tweet_id)  # filtering profile/api/tweets/<ID>/ so it returns only the requested ID
-    if not qs.exists():
-        return Response({}, status=400)
-    obj = qs.first()
-    serializer = TweetSerializer(obj)
-    return Response(serializer.data, status=200)
-
-
-@api_view(['DELETE', 'POST'])
-@permission_classes([IsAuthenticated])
-def tweets_delete_view(request, tweet_id, *args, **kwargs):
-    qs = Tweet.objects.filter(id=tweet_id)
-    if not qs.exists():
-        return Response({}, status=404)  # return error as no Tweet/post ID has been founded
-    qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
-    if not qs.exists():
-        return Response({'message': 'You cannot delete this post'}, status=401)
-    obj = qs.first()
-    obj.delete()
-    return Response({'message': 'Post removed'}, status=200)
-
-
-#  From 4h:05min onwards
-@api_view(['DELETE', 'POST'])
-@permission_classes([IsAuthenticated])
-def tweets_action_view(request, *args, **kwargs):
-    # Actions such as Like, unlike, comment
-    serializer = TweetActionSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        data = serializer.validated_data
-        tweet_id = data.get("id")
-        action = data.get("action")
-        content = data.get("content")
-        qs = Tweet.objects.filter(id=tweet_id)
-        if not qs.exists():
-            return Response({'Fail2'}, status=404)
-        obj = qs.first()
-        if action == "like":
-            obj.likes.add(request.user)  # Same can be applied for comments
-            serializer = TweetSerializer(obj)
-            return Response(serializer.data, status=200)
-        elif action == "unlike":
-            obj.likes.remove(request.user)
-            serializer = TweetSerializer(obj)
-            return Response(serializer.data, status=200)
-        elif action == "retweet":
-            new_tweet = Tweet.objects.create(
-                user=request.user,
-                parent=obj,
-                content=content,
-            )
-            print(new_tweet.parent)
-            serializer = TweetSerializer(new_tweet)
-            return Response(serializer.data, status=201)
-        return Response({}, status=200)
+def tweet_list_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    username = request.GET.get('username')
+    if username != None:
+        qs = qs.by_username(username)
+    return get_paginated_queryset_response(qs, request)
 
 
 def create_post_view_django(request, *args, **kwargs):

@@ -8,10 +8,7 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 # Create your views here.
 def home_view(request, *args, **kwargs):
-    username = None
-    if request.user.is_authenticated:
-        username = request.user.username
-    return render(request, "pages/profile.html", context={"username": username}, status=200)
+    return render(request, "pages/feed.html")
 
 
 def tweets_list_view(request, *args, **kwargs):
@@ -19,7 +16,7 @@ def tweets_list_view(request, *args, **kwargs):
 
 
 def tweets_detail_view(request, tweet_id, *args, **kwargs):
-    return render(request, "tweets-files/details.html", context={"tweet_id": tweet_id})
+    return render(request, "tweets-files/detail.html", context={"tweet_id": tweet_id})
 
 
 def login_page(request, *args, **kwargs):

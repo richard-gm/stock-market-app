@@ -34,8 +34,9 @@ from src.views import (
 )
 
 urlpatterns = [
+    path('', home_view),
     path('admin/', admin.site.urls),
-    path('', tweets_list_view),
+    path('global/', tweets_list_view),
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
@@ -44,7 +45,7 @@ urlpatterns = [
     re_path(r'profiles?/', include('profiles.urls')),
     path('portfolio', portfolio),
     path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
-    re_path(r'profiles?/', include('profiles.api.urls')),
+    re_path(r'api/profiles?/', include('profiles.api.urls')),
 
 ]
 

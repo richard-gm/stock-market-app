@@ -143,8 +143,8 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # JSON rendered for Production
 DEFAULT_RENDERER_CLASSES = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
+    'rest_framework.renderers.JSONRenderer',
+]
 
 DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework.authentication.SessionAuthentication'

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {apiTweetCreate} from './lookup'
 
@@ -11,9 +10,10 @@ export function TweetCreate(props){
             didTweet(response)
         } else {
             console.log(response)
-            alert("An error occurred, please try again")
+            alert("An error occurred please try again")
         }
     }
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const newVal = textAreaRef.current.value

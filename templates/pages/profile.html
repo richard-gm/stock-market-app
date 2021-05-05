@@ -86,32 +86,34 @@ function handleTweetCreateFormDidSumbit(event) {
             const ogHtml = tweetsContainerElement.innerHTML
             tweetsContainerElement.innerHTML = newTweetElement + ogHtml
             myForm.reset()
-        } else if (xhr.status === 400){
+        } else if (xhr.status === 400) {
             const errorJson = xhr.response
             const contentError = errorJson.content
             let contentErrorMsg;
-            if (contentError){
+            if (contentError) {
                 contentErrorMsg = contentError[0]
-                if(contentErrorMsg){
-                    handlePostFormError(contentErrorMsg, true)
-                }else{
-                    alert('An error ocurred. PLease try again.')
+                if (contentErrorMsg) {
+                    handleTweetFormError(contentErrorMsg, true)
+                } else {
+                    alert("An error occured. Please try again.")
                 }
-            }else {
-                alert("An error occurred. Please try again")
+            } else {
+                alert("An error occured. Please try again.")
             }
-        } else if (xhr.status === 401){
-            console.log("Non authorised user - You must login")
-            window.location.href = "/login.html"
-        } else if (xhr.status === 403){
-            console.log("Non authorised user - You must login")
-            window.location.href = "/login.html"
-        }else if (xhr.status === 500){
-            console.log("There was a server error, please try again later.")
+        } else if (xhr.status === 401) {
+            alert("You must login!")
+            window.location.href = "/login"
+        } else if (xhr.status === 403) {
+            alert("You must login!")
+            window.location.href = "/login"
         }
+        else if (xhr.status === 500) {
+            alert("There was a server error, please try again.")
+        }
+
     }
-    xhr.onerror = function (){
-        alert("Error occurred. Please try again")
+    xhr.onerror = function() {
+        alert("An error occurred. Please try again later.")
     }
     xhr.send(myFormData)
 }
@@ -146,9 +148,9 @@ function loadTweets(tweetsElement) {
 loadTweets(tweetsContainerElement)
 
 
-function handleTweetActionBtn (tweet_id, currentCount, action) {
+function handleTweetActionBtn(tweet_id, currentCount, action) {
     console.log(tweet_id, currentCount)
-    const url = "/profile/api/tweets/action"
+    const url = "/api/tweets/action"
     const method="POST"
     const data = JSON.stringify({
         id: tweet_id,
@@ -162,39 +164,39 @@ function handleTweetActionBtn (tweet_id, currentCount, action) {
     xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
     xhr.setRequestHeader("X-CSRFToken", csrftoken)
     xhr.onload = function() {
-        // React will be used to update this in the future
+        // react.js this handle the state much better
         loadTweets(tweetsContainerElement)
     }
     xhr.send(data)
     return
 }
 
+function RetweetBtn(tweet) {
+    return "<button class='btn btn-outline-success btn-sm' onclick=handleTweetActionBtn(" +
+        tweet.id + "," + tweet.likes + ",'retweet')>Retweet</button>"
+}
+
+
 function UnLikeBtn(tweet) {
-    return "<button class='btn btn-danger btn-sm' onclick=handleTweetActionBtn(" +
-    tweet.id + "," + tweet.likes + ",'unlike')>Unlike</button>"
+    return "<button class='btn btn-outline-primary btn-sm' onclick=handleTweetActionBtn(" +
+        tweet.id + "," + tweet.likes + ",'unlike')>Unlike</button>"
 }
 
 function LikeBtn(tweet) {
     return "<button class='btn btn-primary btn-sm' onclick=handleTweetActionBtn(" +
-    tweet.id + "," + tweet.likes + ",'like')>" + tweet.likes + " Likes</button>"
-}
-
-function CommentBtn(tweet) {
-    return "<button class='btn btn-outline-success btn-sm' onclick=handleTweetActionBtn(" +
-    tweet.id + "," + tweet.likes + ",'comment')>Comment</button>"
+        tweet.id + "," + tweet.likes + ",'like')>" + tweet.likes + " Likes</button>"
 }
 
 function formatTweetElement(tweet) {
     var formattedTweet = "<div class='col-12 col-md-10 mx-auto border rounded py-3 mb-4 tweet' id='tweet-" + tweet.id
-    + "'><p>" + tweet.content +
+        + "'><p>" + tweet.content +
         "</p><div class='btn-group'>" +
-            LikeBtn(tweet) +
-            UnLikeBtn(tweet) +
-            CommentBtn(tweet) +
+        LikeBtn(tweet) +
+        UnLikeBtn(tweet) +
+        RetweetBtn(tweet) +
         "</div></div>"
     return formattedTweet
 }
-
 
 
 

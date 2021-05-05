@@ -1,7 +1,7 @@
 import React from "react"; // run HTTP request from the backend
 import logo from './logo.svg';
 import './App.css';
-import {TweetsComponent} from "./tweets-modules";
+import {TweetsComponent} from "./tweets";
 
 
 function App() {

@@ -15,9 +15,9 @@ class TweetActionSerializer(serializers.Serializer):
     content = serializers.CharField(allow_blank=True, required=False)
 
     def validate_action(self, value):
-        value = value.lower().strip()  # lowercase values handled
+        value = value.lower().strip() # "Like " -> "like"
         if not value in TWEET_ACTION_OPTIONS:
-            raise serializers.ValidationError('This is not a valid action.')
+            raise serializers.ValidationError("This is not a valid action for tweets")
         return value
 
 
@@ -42,10 +42,16 @@ class TweetSerializer(serializers.ModelSerializer):
     user = PublicProfileSerializer(source='user.profile', read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
     parent = TweetCreateSerializer(read_only=True)
-
     class Meta:
         model = Tweet
-        fields = ['user', 'id', 'content', 'likes', 'is_retweet', 'parent', 'timestamp']
+        fields = [
+            'user',
+            'id',
+            'content',
+            'likes',
+            'is_retweet',
+            'parent',
+            'timestamp']
 
     def get_likes(self, obj):
         return obj.likes.count()

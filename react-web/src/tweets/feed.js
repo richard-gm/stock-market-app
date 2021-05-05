@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react"
-import {apiTweetList} from "./lookup";
-import {Tweet} from "./detail";
+import React, {useEffect, useState}  from 'react'
 
-//6h13
-export function TweetsList(props) {
-    const [tweetsInit, setTweetsInit] = useState([]) // Monitor changes
+import {apiTweetFeed} from './lookup'
+
+import {Tweet} from './detail'
+
+export function FeedList(props) {
+    const [tweetsInit, setTweetsInit] = useState([])
     const [tweets, setTweets] = useState([])
-    const [nextUrl, setNextUrl] = useState([])
+    const [nextUrl, setNextUrl] = useState(null)
     const [tweetsDidSet, setTweetsDidSet] = useState(false)
     useEffect(()=>{
         const final = [...props.newTweets].concat(tweetsInit)
@@ -22,13 +23,13 @@ export function TweetsList(props) {
                     setNextUrl(response.next)
                     setTweetsInit(response.results)
                     setTweetsDidSet(true)
-                } else {
-                    alert("There was an error")
                 }
             }
-            apiTweetList(props.username, handleTweetListLookup) // Null value is needed by default. will be replaced by username
+            apiTweetFeed(handleTweetListLookup)
         }
     }, [tweetsInit, tweetsDidSet, setTweetsDidSet, props.username])
+
+
     const handleDidRetweet = (newTweet) => {
         const updateTweetsInit = [...tweetsInit]
         updateTweetsInit.unshift(newTweet)
@@ -37,30 +38,28 @@ export function TweetsList(props) {
         updateFinalTweets.unshift(tweets)
         setTweets(updateFinalTweets)
     }
-
     const handleLoadNext = (event) => {
         event.preventDefault()
         if (nextUrl !== null) {
             const handleLoadNextResponse = (response, status) =>{
                 if (status === 200){
                     setNextUrl(response.next)
-                    const newTweets = [...tweets].concat(response.results) // old tweets with new tweets concatenated
+                    const newTweets = [...tweets].concat(response.results)
                     setTweetsInit(newTweets)
                     setTweets(newTweets)
-                } else {
-                    alert("There was an error")
                 }
             }
-            apiTweetList(props.username, handleLoadNextResponse, nextUrl)
+            apiTweetFeed(handleLoadNextResponse, nextUrl)
         }
     }
-    return <React.Fragment> {tweets.map((item, index)=>{
+
+    return <React.Fragment>{tweets.map((item, index)=>{
         return <Tweet
             tweet={item}
             didRetweet={handleDidRetweet}
             className='my-5 py-5 border bg-white text-dark'
             key={`${index}-{item.id}`} />
     })}
-        {nextUrl !== null && <button onClick={handleLoadNext} className='btn btn-outline-primary'>Load Next</button>}
+        {nextUrl !== null && <button onClick={handleLoadNext} className='btn btn-outline-primary'>Load next</button>}
     </React.Fragment>
 }

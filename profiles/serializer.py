@@ -2,14 +2,12 @@ from rest_framework import serializers
 
 from .models import Profile
 
-
 class PublicProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
     following_count = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = Profile
         fields = [
@@ -20,8 +18,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             "location",
             "follower_count",
             "following_count",
-            "username"
-
+            "username",
         ]
 
     def get_first_name(self, obj):
@@ -38,4 +35,3 @@ class PublicProfileSerializer(serializers.ModelSerializer):
 
     def get_follower_count(self, obj):
         return obj.followers.count()
-

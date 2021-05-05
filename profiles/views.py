@@ -13,7 +13,7 @@ def profile_update_view(request, *args, **kwargs):
     user_data = {
         "first_name": user.first_name,
         "last_name": user.last_name,
-        "email": user.email,
+        "email": user.email
     }
     my_profile = user.profile
     form = ProfileForm(request.POST or None, instance=my_profile, initial=user_data)
@@ -29,11 +29,11 @@ def profile_update_view(request, *args, **kwargs):
         user.save()
         profile_obj.save()
     context = {
-            "form": form,
-            "btn_label": "Save",
-            "title": "Update Profile"
+        "form": form,
+        "btn_label": "Save",
+        "title": "Update Profile"
     }
-    return render(request, "profiles/forms.html", context)
+    return render(request, "profiles/form.html", context)
 
 
 def profile_detail_view(request, username, *args, **kwargs):
@@ -46,7 +46,7 @@ def profile_detail_view(request, username, *args, **kwargs):
         "username": username,
         "profile": profile_obj
     }
-    return render(request, "profiles/details.html", context)
+    return render(request, "profiles/detail.html", context)
 
 
 
