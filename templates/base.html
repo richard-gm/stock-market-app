@@ -30,11 +30,20 @@
             {% block content %}
             {% endblock content %}
         </div>
-        {% include "components/footer.html" %}
+
 
     {% include 'react/base_embed.html' %}
     {% include 'react/js.html' %}
+    </div>
 
+
+
+    {% if request.user.is_authenticated %}
+
+    {% else %}
+        {% include "components/footer.html" %}
+
+    {% endif %}
 </body>
 
 </html>
