@@ -16,7 +16,7 @@ def tweets_list_view(request, *args, **kwargs):
 
 
 def tweets_detail_view(request, tweet_id, *args, **kwargs):
-    return render(request, "tweets-files/detail.html", context={"tweet_id": tweet_id})
+    return render(request, "tweets-files/details.html", context={"tweet_id": tweet_id})
 
 
 def login_page(request, *args, **kwargs):
