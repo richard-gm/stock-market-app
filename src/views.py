@@ -7,6 +7,11 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 # Create your views here.
+
+def main_page(request, *args, **kwargs):
+    return render(request, "pages/home.html")
+
+
 def home_view(request, *args, **kwargs):
     return render(request, "pages/feed.html")
 

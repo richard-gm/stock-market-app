@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 
+import src.views
 from accounts.views import (
     login_view,
     logout_view,
@@ -31,9 +32,11 @@ from src.views import (
     dashboard,
     tweets_list_view,
     tweets_detail_view,
+    main_page,
 )
 
 urlpatterns = [
+    path('main/', main_page),
     path('', home_view),
     path('admin/', admin.site.urls),
     path('global/', tweets_list_view),
