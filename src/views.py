@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 

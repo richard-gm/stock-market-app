@@ -27,7 +27,6 @@ from accounts.views import (
 
 from src.views import (
     home_view,
-    profile,
     portfolio,
     dashboard,
     tweets_list_view,
@@ -49,6 +48,9 @@ urlpatterns = [
     path('portfolio', portfolio),
     path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
     re_path(r'api/profiles?/', include('profiles.api.urls')),
+    # stocks end Points
+    path('stocks/', include('stocks.urls')),
+
 
 ]
 

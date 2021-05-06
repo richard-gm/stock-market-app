@@ -1,0 +1,14 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+<h1>Insert your stock</h1>
+
+<form action ="/stocks/" method = "post">
+    {% csrf_token %}
+
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock content %}
