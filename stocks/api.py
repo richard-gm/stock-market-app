@@ -12,11 +12,18 @@ headers = {
 
 
 def get_meta_data(ticker):
-    url = 'https://api.tiingo.com/tiingo/daily/{}'.format(ticker)
+    url = 'https://www.alphavantage.co/query?function=OVERVIEW&apikey=D6QELY8V0DPJIXIQ&symbol={}'.format(ticker)
     response = requests.get(url, headers=headers)
+    # print(response.content) Uncomment this to see the data from the API
     return response.json()
 
 
+# def get_meta_data(ticker):
+#     url = 'https://api.tiingo.com/tiingo/daily/{}'.format(ticker)
+#     response = requests.get(url, headers=headers)
+#     return response.json()
+#
+#
 def get_latest_price(ticker, request):
     url = 'https://api.tiingo.com/tiingo/daily/{}/prices'.format(ticker)
     response = requests.get(url, headers=headers)
@@ -24,6 +31,7 @@ def get_latest_price(ticker, request):
     if responseStatus == 404:
         messages.info(request, 'Ticker not found! - Insert a valid ticker')
         return HttpResponseRedirect("/")
+        print(response.content)
     return response.json()[0]
 
 
@@ -47,4 +55,3 @@ def get_latest_price(ticker, request):
 #         return response.json()
 #     except:
 #         print("An exception with the news")
-

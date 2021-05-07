@@ -9,10 +9,26 @@
             {% endfor %}
         </ul>
     {% else %}
-        <hi> Your ticker is:</hi>
-        <h2>{{ meta.name}} ({{ ticker }})</h2>
-        <p>Description: {{ meta.description }}</p>
+        <h4> Your ticker is:</h4>
+        <h2>{{ meta.Name}} - ({{ meta.Symbol}}) </h2>
+        <p><b>Description:</b> {{ meta.Description }}</p>
         </br>
+        <h3>Financial information</h3>
+                <table class="table text-center">
+                    <tr><td> Exchange: </td><td> {{ meta.Exchange }}</td></tr>
+                    <tr><td> Country: </td><td> {{ meta.Country }}</td></tr>
+                    <tr><td> Sector: </td><td> {{ meta.Sector }}</td></tr>
+                    <tr><td> Industry: </td><td> {{ meta.Industry }}</td></tr>
+                    <tr><td> N.Employees: </td><td> {{ meta.FullTimeEmployees }}</td></tr>
+                    <tr><td> Fiscal Year End: </td><td> {{ meta.FiscalYearEnd }}</td></tr>
+                    <tr><td> Dividend Per Share: </td><td> ${{ meta.DividendPerShare }}</td></tr>
+                    <tr><td> Earning Per Share: </td><td> ${{ meta.EPS }}</td></tr>
+                    <tr><td> ProfitMargin: </td><td> ${{ meta.ProfitMargin }}</td></tr>
+                    <tr><td> Gross Profit: </td><td> ${{ meta.GrossProfitTTM }}</td></tr>
+                    <tr><td> Analyst Target Price: </td><td> ${{ meta.AnalystTargetPrice }}</td></tr>
+                    <tr><td> 50 Moving average: </td><td> ${{ meta.50DayMovingAverage }}</td></tr>
+                    <tr><td> 200 Moving average: </td><td> ${{ meta.200DayMovingAverage }}</td></tr>
+                </table>
         <h3>Today's price for the ticker: {{ ticker }}</h3>
         <table class="table text-center">
             <tr><td> Open: </td><td> ${{ price.open }}</td></tr>
@@ -20,8 +36,13 @@
             <tr><td> Low: </td><td> ${{ price.low }}</td></tr>
             <tr><td> Close: </td><td> ${{ price.close }}</td></tr>
             <tr><td> Volume: </td><td> {{ price.volume }}</td></tr>
-            <tr><td> Dividend: </td><td> {{ price.divCash }}</td></tr>
         </table>
+        <h3>Our recommendation for {{ ticker }} is:</h3>
+            {% if meta.AnalystTargetPrice >= price.close and meta.50DayMovingAverage <= meta.200DayMovingAverage %}
+                <h3> Sell 📉</h3>
+            {% else %}
+                <h3>Buy 📈 </h3>
+            {% endif %}
 
         <!-- TradingView Widget BEGIN -->
         <div class="tradingview-widget-container">
