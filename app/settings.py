@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'src',
     'accounts',
     'profiles',
+    'stocks',
+    'news',
 
 ]
 
