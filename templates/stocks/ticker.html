@@ -4,7 +4,7 @@
 {% block content %}
 
 <hi> Your ticker is:</hi>
-   <h2>{{ meta.name}} ({{ ticker }}</h2>
+   <h2>{{ meta.name}} ({{ ticker }})</h2>
     <p>Description: {{ meta.description }}</p>
     </br>
     <h3>Today's price for the ticker: {{ ticker }}</h3>
@@ -16,5 +16,10 @@
         <tr><td> Volume: </td><td> {{ price.volume }}</td></tr>
         <tr><td> Dividend: </td><td> {{ price.divCash }}</td></tr>
     </table>
+    <h3>Today's news for: {{ ticker }}</h3>
+    <p>Title: {{ news.title }}</p>
+    <p>Source: {{ news.source }}</p>
+    <p>Date: {{ news.publishedDate }}</p>
+    <p>Description: {{ news.description }}</p>
 
 {% endblock content %}

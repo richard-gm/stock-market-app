@@ -20,3 +20,13 @@ def get_latest_price(ticker):
     response = requests.get(url, headers=headers)
     return response.json()[0]
 
+
+def get_latest_news(ticker):
+    try:
+        url = 'https://api.tiingo.com/tiingo/news?tickers=appl'
+        # url = 'https://api.tiingo.com/tiingo/news/{}=/'.format(ticker)
+        response = requests.get(url, headers=headers)
+        return response.json()[0]
+    except:
+        print("An exception with the news")
+

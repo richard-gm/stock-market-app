@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 
 from .forms import TickerSymbolForm
-from .api import get_meta_data, get_latest_price
+from .api import get_meta_data, get_latest_price, get_latest_news
 
 def index(request):
     if request.method == 'POST':
@@ -23,6 +23,7 @@ def ticker(request, tid):
     context['ticker'] = tid
     context['meta'] = get_meta_data(tid)
     context['price'] = get_latest_price(tid)
+    context['news'] = get_latest_news(tid)
     return render(request, 'stocks/ticker.html', context)
 
 
