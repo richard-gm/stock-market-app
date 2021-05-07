@@ -7,11 +7,11 @@ from django.utils.http import is_safe_url
 from rest_framework.response import Response  # Will handle the response rather than senting JSON Obj
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.pagination import PageNumberPagination
 
 from ..forms import TweetForm
 from ..models import Tweet
-from ..serializer import (
+from ..serializers import (
     TweetSerializer,
     TweetActionSerializer,
     TweetCreateSerializer,
@@ -31,20 +31,10 @@ def create_post_view(request, *args, **kwargs):
 
 
 @api_view(['GET'])
-def tweets_list_view(request, *args, **kwargs):
-    qs = Tweet.objects.all()
-    username = request.GET.get('username')  # Getting username from get request
-    if username != None:
-        qs = qs.filter(user__username__iexact=username)
-    serializer = TweetSerializer(qs, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
 def tweets_detail_view(request, tweet_id, *args, **kwargs):
     qs = Tweet.objects.filter(id=tweet_id)  # filtering profile/api/tweets/<ID>/ so it returns only the requested ID
     if not qs.exists():
-        return Response({}, status=400)
+        return Response({}, status=404)
     obj = qs.first()
     serializer = TweetSerializer(obj)
     return Response(serializer.data, status=200)
@@ -58,10 +48,10 @@ def tweets_delete_view(request, tweet_id, *args, **kwargs):
         return Response({}, status=404)  # return error as no Tweet/post ID has been founded
     qs = qs.filter(user=request.user)  # filtering data by username. Users can only delete their own post/data
     if not qs.exists():
-        return Response({'message': 'You cannot delete this post'}, status=401)
+        return Response({"message": "You cannot delete this tweet"}, status=401)
     obj = qs.first()
     obj.delete()
-    return Response({'message': 'Post removed'}, status=200)
+    return Response({"message": "Tweet removed"}, status=200)
 
 
 #  From 4h:05min onwards
@@ -77,7 +67,7 @@ def tweets_action_view(request, *args, **kwargs):
         content = data.get("content")
         qs = Tweet.objects.filter(id=tweet_id)
         if not qs.exists():
-            return Response({'Fail2'}, status=404)
+            return Response({}, status=404)
         obj = qs.first()
         if action == "like":
             obj.likes.add(request.user)  # Same can be applied for comments
@@ -93,10 +83,34 @@ def tweets_action_view(request, *args, **kwargs):
                 parent=obj,
                 content=content,
             )
-            print(new_tweet.parent)
             serializer = TweetSerializer(new_tweet)
             return Response(serializer.data, status=201)
-        return Response({}, status=200)
+    return Response({}, status=200)
+
+
+def get_paginated_queryset_response(qs, request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 20
+    paginated_qs = paginator.paginate_queryset(qs, request)
+    serializer = TweetSerializer(paginated_qs, many=True, context={"request": request})
+    return paginator.get_paginated_response(serializer.data)  # Response( serializer.data, status=200)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def tweet_feed_view(request, *args, **kwargs):
+    user = request.user
+    qs = Tweet.objects.feed(user)
+    return get_paginated_queryset_response(qs, request)
+
+
+@api_view(['GET'])
+def tweet_list_view(request, *args, **kwargs):
+    qs = Tweet.objects.all()
+    username = request.GET.get('username')
+    if username != None:
+        qs = qs.by_username(username)
+    return get_paginated_queryset_response(qs, request)
 
 
 def create_post_view_django(request, *args, **kwargs):

@@ -49,5 +49,3 @@ def register_view(request, *args, **kwargs):
         "title": "Register"
     }
     return render(request, "accounts/auth.html", context)
-
-

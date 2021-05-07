@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
@@ -7,11 +7,13 @@ ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 
 # Create your views here.
+
+def main_page(request, *args, **kwargs):
+    return render(request, "pages/home.html")
+
+
 def home_view(request, *args, **kwargs):
-    username = None
-    if request.user.is_authenticated:
-        username = request.user.username
-    return render(request, "pages/profile.html", context={"username": username}, status=200)
+    return render(request, "pages/feed.html")
 
 
 def tweets_list_view(request, *args, **kwargs):

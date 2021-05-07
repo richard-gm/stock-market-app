@@ -139,12 +139,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static-root")  # It emulate a static versi
 
 # IMPORTANT - add URLs below so the front end can get access to the backend
 CORS_ORIGIN_ALLOW_ALL = True  # Any website has access to the local API
-CORS_URLS_REGEX = r'^/profile/api/.*$'
+CORS_URLS_REGEX = r'^/api/.*$'
 
 # JSON rendered for Production
 DEFAULT_RENDERER_CLASSES = [
-        'rest_framework.renderers.JSONRenderer',
-    ]
+    'rest_framework.renderers.JSONRenderer',
+]
 
 DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework.authentication.SessionAuthentication'
@@ -154,9 +154,9 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
-    # DEFAULT_AUTHENTICATION_CLASSES += [ # Delete this like when running this into prod env
-    #     'app.rest_api.dev.DevAuthentication'
-    # ]
+    DEFAULT_AUTHENTICATION_CLASSES += [ # Delete this like when running this into prod env
+        'app.rest_api.dev.DevAuthentication'
+    ]
 
 REST_FRAMEWORK = {
 

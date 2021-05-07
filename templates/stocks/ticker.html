@@ -1,0 +1,25 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+
+<hi> Your ticker is:</hi>
+   <h2>{{ meta.name}} ({{ ticker }})</h2>
+    <p>Description: {{ meta.description }}</p>
+    </br>
+    <h3>Today's price for the ticker: {{ ticker }}</h3>
+    <table class="table text-center">
+        <tr><td> Open: </td><td> ${{ price.open }}</td></tr>
+        <tr><td> High: </td><td> ${{ price.high }}</td></tr>
+        <tr><td> Low: </td><td> ${{ price.low }}</td></tr>
+        <tr><td> Close: </td><td> ${{ price.close }}</td></tr>
+        <tr><td> Volume: </td><td> {{ price.volume }}</td></tr>
+        <tr><td> Dividend: </td><td> {{ price.divCash }}</td></tr>
+    </table>
+    <h3>Today's news for: {{ ticker }}</h3>
+    <p>Title: {{ news.title }}</p>
+    <p>Source: {{ news.source }}</p>
+    <p>Date: {{ news.publishedDate }}</p>
+    <p>Description: {{ news.description }}</p>
+
+{% endblock content %}

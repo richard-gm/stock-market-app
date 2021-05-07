@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 
+import src.views
 from accounts.views import (
     login_view,
     logout_view,
@@ -26,16 +27,18 @@ from accounts.views import (
 
 from src.views import (
     home_view,
-    profile,
     portfolio,
     dashboard,
     tweets_list_view,
     tweets_detail_view,
+    main_page,
 )
 
 urlpatterns = [
+    path('main/', main_page),
+    path('', home_view),
     path('admin/', admin.site.urls),
-    path('', tweets_list_view),
+    path('global/', tweets_list_view),
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
@@ -44,7 +47,10 @@ urlpatterns = [
     re_path(r'profiles?/', include('profiles.urls')),
     path('portfolio', portfolio),
     path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
-    re_path(r'profiles?/', include('profiles.api.urls')),
+    re_path(r'api/profiles?/', include('profiles.api.urls')),
+    # stocks end Points
+    path('stocks/', include('stocks.urls')),
+
 
 ]
 

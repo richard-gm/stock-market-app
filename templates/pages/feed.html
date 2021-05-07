@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <h2>Welcome to your personal profile - @{{ user }}</h2>
+    </div>
+    </br>
+    {% if request.user.is_authenticated %}
+        <div id='tweetme-2-feed'></div>
+    {% else %}
+        <div id='tweetme-2'></div>
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    <div class="container text-center">
+        <h2>Insert your stock</h2>
+    </div>
+
+    </br>        </br>
+    <div class="d-flex justify-content-center">
+
+
+        <form action ="/stocks/" method = "post">
+            {% csrf_token %}
+
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock content %}
