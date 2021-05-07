@@ -2,19 +2,42 @@
 {% block head_title %} Input! {% endblock head_title%}
 <br />
 {% block content %}
+{#    <div class="container text-center">#}
+{#        <h2>Insert your stock for news</h2>#}
+{#    </div>#}
+{##}
+{#    </br>        </br>#}
+{#    <div class="d-flex justify-content-center">#}
+{##}
+{##}
+{#        <form action ="/news/" method = "post">#}
+{#            {% csrf_token %}#}
+{##}
+{#            {{ form }}#}
+{#            <input class="btn btn-primary" type="ubmit" value="Submittttt">#}
+{#            <input type="submit" value="submit">#}
+{##}
+{#        </form>#}
+{#    </div>#}
+
+    <h1> Main  News section here!</h1>
     <div class="container text-center">
-        <h2>Insert your stock</h2>
+
+        <div class="row">
+            {% for x in api.articles %}
+                <div class="col-sm">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{x.urlToImage}}" class="card-img-top" alt="{{x.source.name}}">
+                        <div class="card-body">
+                            <h4 class="card-title">{{x.title}}</h4>
+                            <p class="card-text">{{x.description|truncatechars:150}}</p>
+                            <a href="{{ x.url }}" target="_blank" class="btn btn-primary">Read More</a>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
-    </br>        </br>
-    <div class="d-flex justify-content-center">
-
-
-        <form action ="/stocks/" method = "post">
-            {% csrf_token %}
-
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
-    </div>
 {% endblock content %}
