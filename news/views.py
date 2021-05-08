@@ -21,17 +21,17 @@ def index(request):
     return render(request, 'news/index.html', {"api": api})
 
 
-def index_by_ticker(request):
-    if request.method == 'POST':
-        form = TickerSymbolNewsForm(request.POST)
-        # messages.info(request, 'Did work!')
-        if form.is_valid():
-            ticker = request.POST['ticker']
-            return HttpResponseRedirect(ticker)
-    else:
-        # messages.info(request, 'Did not work!')
-        form = TickerSymbolNewsForm()
-    return render(request, "news/news.html", {"form": form})
+# def index_by_ticker(request):
+#     if request.method == 'POST':
+#         form = TickerSymbolNewsForm(request.POST)
+#         # messages.info(request, 'Did work!')
+#         if form.is_valid():
+#             ticker = request.POST['ticker']
+#             return HttpResponseRedirect(ticker)
+#     else:
+#         # messages.info(request, 'Did not work!')
+#         form = TickerSymbolNewsForm()
+#     return render(request, "news/news.html", {"form": form})
 
 
 def ticker(request, tid):

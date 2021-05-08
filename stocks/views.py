@@ -27,7 +27,7 @@ def ticker(request, tid):
     context['ticker'] = tid
     context['meta'] = get_meta_data(tid)
     context['price'] = get_latest_price(tid, request)
-    context['news'] = get_stocks_news(tid)
+    context['news'] = get_stocks_news(tid, request)
     # context['statements'] = get_latest_statements(tid)
     return render(request, 'stocks/ticker.html', context)
 

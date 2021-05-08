@@ -2,7 +2,7 @@
 {% block head_title %} Input! {% endblock head_title%}
 <br />
 {% block content %}
-    <div class="container text-center">
+    <div class="d-flex justify-content-center">
         <h2>Insert your stock</h2>
     </div>
 
@@ -16,5 +16,103 @@
             {{ form }}
             <input class="btn btn-primary" type="submit" value="Submit">
         </form>
+    </div></br></br></br></br>
+
+
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="col-sm">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://uk.tradingview.com/symbols/CURRENCYCOM-US500/" rel="noopener" target="_blank"><span class="blue-text">US500 Quotes</span></a> by TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "CURRENCYCOM:US500",
+                            "width": 350,
+                            "height": 220,
+                            "locale": "uk",
+                            "dateRange": "3M",
+                            "colorTheme": "light",
+                            "trendLineColor": "#37a6ef",
+                            "underLineColor": "#E3F2FD",
+                            "isTransparent": false,
+                            "autosize": false,
+                            "largeChartUrl": ""
+                        }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+            <div class="col-sm">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://uk.tradingview.com/symbols/CURRENCYCOM-US30/" rel="noopener" target="_blank"><span class="blue-text">US30 Quotes</span></a> by TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "CURRENCYCOM:US30",
+                            "width": 350,
+                            "height": 220,
+                            "locale": "uk",
+                            "dateRange": "3M",
+                            "colorTheme": "light",
+                            "trendLineColor": "#37a6ef",
+                            "underLineColor": "#E3F2FD",
+                            "isTransparent": false,
+                            "autosize": false,
+                            "largeChartUrl": ""
+                        }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+            <div class="col-sm">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://uk.tradingview.com/symbols/BTCUSD/?exchange=BITBAY" rel="noopener" target="_blank"><span class="blue-text">BTCUSD Rates</span></a> by TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "BITBAY:BTCUSD",
+                            "width": 350,
+                            "height": 220,
+                            "locale": "uk",
+                            "dateRange": "3M",
+                            "colorTheme": "light",
+                            "trendLineColor": "#37a6ef",
+                            "underLineColor": "#E3F2FD",
+                            "isTransparent": false,
+                            "autosize": false,
+                            "largeChartUrl": ""
+                        }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+            <div class="col-sm">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://uk.tradingview.com/symbols/ETHUSD/?exchange=KRAKEN" rel="noopener" target="_blank"><span class="blue-text">ETHUSD Rates</span></a> by TradingView</div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        {
+                            "symbol": "KRAKEN:ETHUSD",
+                            "width": 350,
+                            "height": 220,
+                            "locale": "uk",
+                            "dateRange": "3M",
+                            "colorTheme": "light",
+                            "trendLineColor": "#37a6ef",
+                            "underLineColor": "#E3F2FD",
+                            "isTransparent": false,
+                            "autosize": false,
+                            "largeChartUrl": ""
+                        }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
     </div>
 {% endblock content %}
