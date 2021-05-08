@@ -29,9 +29,9 @@ def login_page(request, *args, **kwargs):
     return render(request, "pages/auth.html", context={}, status=200)
 
 
-def portfolio(request, *args, **kwargs):
-    print(request.user)
-    return render(request, "pages/portfolio.html", context={}, status=200)
+# def portfolio(request, *args, **kwargs):
+#     print(request.user)
+#     return render(request, "pages/portfolio.html", context={}, status=200)
 
 
 def dashboard(request, *args, **kwargs):

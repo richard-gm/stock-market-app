@@ -26,11 +26,14 @@ from accounts.views import (
 
 from src.views import (
     home_view,
-    portfolio,
     dashboard,
     tweets_list_view,
     tweets_detail_view,
     main_page,
+)
+
+from portfolio.views import (
+    add_stock
 )
 
 urlpatterns = [
@@ -44,14 +47,14 @@ urlpatterns = [
     path('<int:tweet_id>', tweets_detail_view),
     path('dashboard', dashboard),
     re_path(r'profiles?/', include('profiles.urls')),
-    path('portfolio', portfolio),
     path('api/tweets/', include('src.api.urls')),  # API endpoints on this file
     re_path(r'api/profiles?/', include('profiles.api.urls')),
     # stocks end Points
     path('stocks/', include('stocks.urls')),
     # news end points
-    path('news/', include('news.urls'))
-
+    path('news/', include('news.urls')),
+    path('portfolio/', include('portfolio.urls')),
+    path('add_stock/', add_stock)
 ]
 
 if settings.DEBUG:
