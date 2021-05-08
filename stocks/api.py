@@ -1,6 +1,8 @@
 # tingo api used
 # API KEY = 5b49388fcb7f76ae2ed39277cd6d5200f70aa11b
 # newsAPI = afcb0b2d3481429aa1c7456b38242f10
+import json
+
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 import requests
@@ -18,12 +20,15 @@ def get_meta_data(ticker):
     return response.json()
 
 
-# def get_meta_data(ticker):
-#     url = 'https://api.tiingo.com/tiingo/daily/{}'.format(ticker)
-#     response = requests.get(url, headers=headers)
-#     return response.json()
-#
-#
+def get_stocks_news(ticker):
+    url = 'https://cloud.iexapis.com/stable/stock/{}/news/last/5?token=sk_9c552f5e68764a87aac37106892279c8'.format(ticker)
+    response = requests.get(url)
+    # print(response.content) Uncomment this to see the data from the API
+    print(response.status_code)
+    api_call = json.loads(response.content)[0]
+    return api_call
+
+
 def get_latest_price(ticker, request):
     url = 'https://api.tiingo.com/tiingo/daily/{}/prices'.format(ticker)
     response = requests.get(url, headers=headers)
