@@ -1,0 +1,22 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <h2>Portfolio - Insert your stock ticker </h2>
+    </div>
+
+    </br>        </br>
+    <div class="d-flex justify-content-center">
+
+
+        <form action ="{% url 'portfolio' %}" class="form-inline " method = "post">
+
+                {% csrf_token %}
+            <label for="ticker">Stock ticker symbol: </label>
+            <input id="ticker" type="text" name="ticker" value="{{ current_name }}">
+            <button class="btn btn-primary small" type="submit" > Submit   </button>
+        </form>
+    </div>
+
+{% endblock content %}

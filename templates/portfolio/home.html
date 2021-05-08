@@ -1,0 +1,23 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    {% if ticker %}
+        {{ ticker }}
+    {% endif %}
+
+    {% if api %}
+        {% if api == "Error..." %}
+            There was a problem with your ticker, please try again
+        {% else %}
+            <h1>
+                {{ api.companyName }} - {{ api.symbol }}
+            </h1>
+            Price: {{  api.latestPrice}}
+            MarketCap: {{  api.latestPrice}}
+            Price: {{  api.latestPrice}}
+            Price: {{  api.latestPrice}}
+        {% endif %}
+    {% endif %}
+
+{% endblock content %}
