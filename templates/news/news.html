@@ -1,0 +1,25 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    <div class="container text-center">
+
+    <h1> Ticker stock symbol!</h1>
+
+    <div class="row">
+        {% for x in api.articles %}
+            <div class="col-sm">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{x.urlToImage}}" class="card-img-top" alt="{{x.source.name}}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{x.title}}</h4>
+                        <p class="card-text">{{x.description|truncatechars:150}}</p>
+                        <a href="{{ x.url }}" target="_blank" class="btn btn-primary">Read More</a>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock content %}

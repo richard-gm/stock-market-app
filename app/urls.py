@@ -18,7 +18,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 
-import src.views
 from accounts.views import (
     login_view,
     logout_view,
@@ -50,7 +49,8 @@ urlpatterns = [
     re_path(r'api/profiles?/', include('profiles.api.urls')),
     # stocks end Points
     path('stocks/', include('stocks.urls')),
-
+    # news end points
+    path('news/', include('news.urls'))
 
 ]
 

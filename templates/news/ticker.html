@@ -1,0 +1,21 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+
+<hi> Your ticker is news :</hi>
+
+    <form action ="/news/" method = "post">
+        {% csrf_token %}
+
+        {{ form }}
+        <input class="btn btn-primary" type="ubmit" value="Submittttt">
+        <input type="submit" value="submit">
+
+    </form>
+    <h3>Statements for: {{ ticker }}</h3>
+{#    <p>Title: {{ statements.statementData.cashFlow }}</p>#}
+{#    <p>Date: {{ news.publishedDate }}</p>#}
+{#    <p>Description: {{ news.description }}</p>#}
+
+{% endblock content %}
