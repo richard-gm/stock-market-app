@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import portfolio, add_stock
+from .views import portfolio, add_stock, delete_stock
 
 urlpatterns = [
-    path('', portfolio, name='portfolio'),
-    path('templates/portfolio/add_stock.html', add_stock, name='add_stock')
-
+    path('add_stock/', add_stock, name='add_stock'),
+    path('delete/<stock_symbol>', delete_stock, name='delete_stock'),
 ]

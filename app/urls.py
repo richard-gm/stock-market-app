@@ -54,7 +54,6 @@ urlpatterns = [
     # news end points
     path('news/', include('news.urls')),
     path('portfolio/', include('portfolio.urls')),
-    path('add_stock/', add_stock)
 ]
 
 if settings.DEBUG:
