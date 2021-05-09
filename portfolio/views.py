@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 import requests
 import json
+from .models import StockDB
+from .form import StockForm
 # Create your views here.\
 
 token = 'sk_9c552f5e68764a87aac37106892279c8'
@@ -23,6 +27,15 @@ def portfolio(request):
 
 
 def add_stock(request):
-    return render(request, 'portfolio/add_stock.html', {})
+    if request.method == 'POST':
+        form = StockForm(request.POST or None)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Stock added successfully")
+            return redirect('add_stock')
+    else:
+        ticker = StockDB.objects.all()
+    return render(request, 'portfolio/add_stock.html', {'ticker': ticker})
 
 
