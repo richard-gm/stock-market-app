@@ -54,4 +54,9 @@ def profile_detail_view(request, username, *args, **kwargs):
     return render(request, "profiles/detail.html", context)
 
 
+def api_view(request, *args, **kwargs):
+    return render(request, "components/api.html")
 
+
+def tweets_list_view(request, *args, **kwargs):
+    return render(request, "tweets-files/list.html")
