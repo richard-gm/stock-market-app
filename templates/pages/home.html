@@ -4,31 +4,64 @@
 <br />
 {% block content %}
     </br></br></br></br></br>
-<div class="hero-body">
-  <div class="container has-text-centered">
-    <div class="columns is-vcentered">
-      <div class="column is-5">
-        <figure class="image is-16by9">
-          <img
-            src="https://resizer.iproimg.com/unsafe/880x/https://assets.iproup.com/assets/jpg/2019/06/4559.jpg?6.3.1"
-            alt="Description"
-          />
-        </figure>
-      </div>
-      <div class="column is-6 is-offset-1">
-        <h1 class="title is-2">Stock Market</h1>
-        <h2 class="subtitle is-4">
-          A social media app for investors and traders.
-        </h2>
-        <p class="has-text-centered">
-          <a class="button is-medium is-grey" href="/register"> Learn more </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
 
-<section class="hero is-white is-fullheight">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <div class="container has-text-centered">
+            <div class="columns is-vcentered">
+                <div class="column is-5">
+                    <figure class="image is-16by9">
+                        <img
+                                src="https://resizer.iproimg.com/unsafe/880x/https://assets.iproup.com/assets/jpg/2019/06/4559.jpg?6.3.1"
+                                alt="Description"
+                        />
+                    </figure>
+                </div>
+                <div class="column is-6 is-offset-1">
+                    <h1 class="title is-2">Stock Market</h1>
+                    <h2 class="subtitle is-4">
+                        A social media app for investors and traders.
+                    </h2>
+                    <p class="has-text-centered">
+                        <a class="button is-medium is-grey" href="/register"> Learn more </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section1">
+        <div class="container" id="test1">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-6 mb--30">
+                    <div class="omga-08__single-fact">
+                        <h3 class="title">1000+</h3>
+                        <p>Traders use Tradytics regularly.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 mb--30">
+                    <div class="omga-08__single-fact">
+                        <h3 class="title">40</h3>
+                        <p>Traders have a paid subscription.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 mb--30">
+                    <div class="omga-08__single-fact">
+                        <h3 class="title">5.8K+</h3>
+                        <p>Traders have joined our discord.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 mb--30">
+                    <div class="omga-08__single-fact">
+                        <h3 class="title">4</h3>
+                        <p>APIs used to get the data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<section class="hero is-white ">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-multiline is-centered">
@@ -89,11 +122,12 @@
       </div>
     </div>
   </div>
-</section>
-<div class="d-flex justify-content-center">
+</section></br></br></br>
+<div class="d-flex justify-content-center" id="part3">
   <a class="button is-info is-medium" href="/register">Sign Up</a>
 </div>
-<section class="section" id="how-it-works">
+
+<section class="section" id="part4">
   <div class="container has-text-centered">
     <div class="section-header">
       <h2 class="title">All you need in one place</h2>
@@ -103,6 +137,7 @@
       </h3>
     </div>
   </div>
-
+</section>
+    {% include "components/footer.html" %}
 
 {% endblock %}
