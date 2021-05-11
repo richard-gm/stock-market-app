@@ -37,8 +37,8 @@ from profiles.views import (
 )
 
 urlpatterns = [
-    path('main/', main_page),
-    path('', home_view),
+    path('main/', home_view),
+    path('', main_page),
     path('admin/', admin.site.urls),
     path('global/', tweets_list_view),
     path('login/', login_view),

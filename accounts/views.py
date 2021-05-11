@@ -9,7 +9,7 @@ def login_view(request, *args, **kwargs):
     if form.is_valid():
         user_ = form.get_user()
         login(request, user_)
-        return redirect("/")
+        return redirect("/global")
     context = {  # using form dictionary - build in feature from django
         "form": form,
         "btn_label": "Login",
