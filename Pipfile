@@ -11,6 +11,7 @@ requests = "*"
 pe = "*"
 selenium = "*"
 beautifulsoup4 = "*"
+awsebcli = "*"
 
 [dev-packages]
 autopep8 = "*"
