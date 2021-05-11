@@ -12,6 +12,7 @@ pe = "*"
 selenium = "*"
 beautifulsoup4 = "*"
 awsebcli = "*"
+whitenoise = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -58,6 +58,7 @@ typing-extensions==3.10.0.0
 urllib3==1.25.11
 wcwidth==0.1.9
 websocket-client==0.59.0
+whitenoise==5.2.0
 wrapt==1.12.1
 xlwt==1.0.0
 yahoo==0.1
