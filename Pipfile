@@ -13,6 +13,7 @@ selenium = "*"
 beautifulsoup4 = "*"
 awsebcli = "*"
 whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 autopep8 = "*"
