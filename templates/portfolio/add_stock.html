@@ -2,8 +2,84 @@
 {% block head_title %} Input! {% endblock head_title%}
 <br />
 {% block content %}
-
-    <h1>
-    This is your portfolio website
+    <h1 class="text-center">
+    This is your stock portfolio website
     </h1>
+    </br>
+    <div>
+    {% if messages %}
+        <div class="alert alert-success" role="alert" id="msg">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div class="d-flex justify-content-center">
+
+        <form action ="{% url 'add_stock' %}" class="form-inline " method = "POST">
+
+            {% csrf_token %}
+            <label for="ticker">Type ticker symbol: </label>
+            <input id="ticker" type="text" name="ticker" value="{{ current_name }}">
+            <button class="btn btn-secondary " type="submit" > Add </button>
+        </form>
+    </div>
+
+    <table id="table" class="table table-hover table-bordered" style="border: 1px solid: #ef3a3a !important;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Current price</th>
+            <th scope="col">Daily change</th>
+            <th scope="col">Stocks owned</th>
+            <th scope="col">Buying price</th>
+            <th scope="col">Gain/Lose</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if ticker %}
+            {% for item in output %}
+                <tr>
+                    <th scope="row">{{ item.symbol }}</th>
+                    <th scope="row">{{ item.companyName }}</th>
+                    <th scope="row">${{ item.latestPrice |floatformat:-2 }}</th>
+                    <th scope="row">%{{ item.latestPrice }}</th>
+                    <th scope="row">{{ item.latestPrice }}</th>
+                    <th scope="row">${{ item.latestPrice }}</th>
+                    <th scope="row">${{ item.latestPrice }}</th>
+                    <td><a href="{% url 'delete_stock' item.symbol %}" class="btn btn-outline-danger btn-sm">X</a></td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    </div>
+
+    <form method="post" class="form-inline" role="form" action="portfolio">
+        {% csrf_token %}
+        <div class="form-group">
+            <input style="width:75px" class="form-control" name="shares" class="number" placeholder="Shares" type="text"/>
+            <input type="hidden" name="which-form" value="buy-sell"/>
+            <input type="hidden" name="stock-symbol" value="{{ stocks.Symbol }}"/>
+            <input type="hidden" name="cost-per-share" value="{{ stocks.LastTradePriceOnly }}"/>
+        </div>
+        <div class="btn-group">
+            <button type="submit" name="buy-stock" value="buy-stock" class="btn btn-primary">Buy</button>
+            <button type="submit" name="sell-stock" value="sell-stock" class="btn btn-primary">Sell</button>
+        </div>
+    </form>
+<script>
+    // This script is from stackoverflow. Link: https://stackoverflow.com/questions/51682084/how-to-hide-django-message-after-it-is-displayed-for-few-seconds/51682933#:~:text=You%20need%20to%20write%20javascript,hide%20message%20after%20some%20time.&text=Put%20this%20code%20inside%20base,will%20make%20your%20message%20disappear.
+    var message_id = document.getElementById("msg");
+
+    setTimeout(function(){
+        message_id.style.display = "none";
+    }, 3000);
+    // Timeout is 3 sec,
+</script>
 {% endblock content %}

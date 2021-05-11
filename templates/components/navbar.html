@@ -13,21 +13,20 @@
                     <a class="nav-link" href="/global">General Feed <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/add_stock">Portfolio <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">watchlist <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'add_stock' %}">Portfolio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/news">News <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/stocks">Stock <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/stocks">Search <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Charts <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">VIP <span class="sr-only">(current)</span></a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="/api">API </a>
+                </li>
                 </ul>
                 </div>
             {% else %}

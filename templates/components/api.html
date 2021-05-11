@@ -1,0 +1,57 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    <div class="container text-center">
+        <h2>List of API views that you can access to (DEV MODE ONLY)</h2>
+    </div>
+
+    </br>        </br>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Link</th>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">3</th>
+            <td> <a href="http://localhost:8000/api/tweets/">All tweets</a></br>  </td>
+            <td>General view </td>
+        </tr>
+        <tr>
+            <th scope="row">1</th>
+            <td> <a href="http://localhost:8000/api/tweets/feed/">Feed</a></br> </td>
+            <td>Feed api</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td> <a href="http://localhost:8000/api/tweets/action/">Action</a></br> </td>
+            <td>Action API view </td>
+
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td> <a href="http://localhost:8000/api/tweets/create/">Create</a></br>  </td>
+            <td>Create API view </td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td> <a href="http://localhost:8000/api/tweets/id_number/">Single message</a></br>  </td>
+            <td>Replace id_number from the url with an actual number eg. 12 </td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td> <a href="http://localhost:8000/api/tweets/id_number/delete">Delete message</a></br>  </td>
+            <td>Replace id_number from the url with an actual number eg. 12 </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+
+{% endblock content %}

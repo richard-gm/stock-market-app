@@ -3,10 +3,6 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
 # Create your views here.
 
-# user1
-# EQ(H2\*[5cV>9a~k
-
-
 # 8h48min
 def login_view(request, *args, **kwargs):
     form = AuthenticationForm(request, data=request.POST or None)

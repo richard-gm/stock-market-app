@@ -8,6 +8,10 @@ django = "==2.2"
 djangorestframework = "*"
 django-cors-headers = "*"
 requests = "*"
+pe = "*"
+selenium = "*"
+beautifulsoup4 = "*"
+awsebcli = "*"
 
 [dev-packages]
 autopep8 = "*"
