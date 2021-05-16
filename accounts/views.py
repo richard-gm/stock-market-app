@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout
+
+
 # Create your views here.
 
 # 8h48min
 def login_view(request, *args, **kwargs):
     form = AuthenticationForm(request, data=request.POST or None)
-    if form.is_valid():
+    if form.is_valid():  # Note that the form has been provided by django
         user_ = form.get_user()
         login(request, user_)
         return redirect("/global")

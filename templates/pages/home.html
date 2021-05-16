@@ -21,9 +21,14 @@
                     <h2 class="subtitle is-4">
                         A social media app for investors and traders.
                     </h2>
+                    {% if request.user.is_authenticated %}
                     <p class="has-text-centered">
-                        <a class="button is-medium is-grey" href="/register"> Learn more </a>
+                        <a class="button is-medium is-grey" href="/news"> Learn more </a>
                     </p>
+                    {% else %}
+                        <a class="button is-medium is-grey" href="/register"> Learn more </a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
