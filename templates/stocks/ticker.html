@@ -41,7 +41,24 @@
                 </table>
             </section>
         </div></br></br></br>
+        <h1>Buy this stock</h1></br>
+        <p>Insert number of shares: </p>
+        <form method="post" class="form-inline" role="form" action="portfolio">
+            {% csrf_token %}
+            <div class="form-group">
+                <input style="width:75px" class="form-control" name="shares" class="number" placeholder="Shares" type="text"/>
+                <input type="hidden" name="which-form" value="buy-sell"/>
+                <input type="hidden" name="stock-symbol" value="{{ stocks.Symbol }}"/>
+                <input type="hidden" name="cost-per-share" value="{{ stocks.LastTradePriceOnly }}"/>
+            </div>
 
+            <div class="btn-group">
+
+                <button type="submit" name="buy-stock" value="buy-stock" class="btn btn-primary">Buy</button>
+{#                <button type="submit" name="sell-stock" value="sell-stock" class="btn btn-primary">Sell</button>#}
+            </div>
+        </form>
+        </br></br> </br></br>
         <div class="container">
             <section class="row">
                 <h3>Our recommendation for - ({{ ticker }}) is: </h3>

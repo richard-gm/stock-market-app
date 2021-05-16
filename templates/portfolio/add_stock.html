@@ -59,20 +59,35 @@
     </table>
     {% endif %}
     </div>
+    </br>
+    <h1>Charts:</h1>
+    <div class="mh-100 mw-100">
+        <!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container ">
+            <div id="tradingview_2f322"></div>
 
-    <form method="post" class="form-inline" role="form" action="portfolio">
-        {% csrf_token %}
-        <div class="form-group">
-            <input style="width:75px" class="form-control" name="shares" class="number" placeholder="Shares" type="text"/>
-            <input type="hidden" name="which-form" value="buy-sell"/>
-            <input type="hidden" name="stock-symbol" value="{{ stocks.Symbol }}"/>
-            <input type="hidden" name="cost-per-share" value="{{ stocks.LastTradePriceOnly }}"/>
+            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+            <script type="text/javascript">
+                new TradingView.widget(
+                    {
+                        "width": 1100,
+                        "height": 610,
+                        "symbol": "NASDAQ:AAPL",
+                        "interval": "240",
+                        "timezone": "Europe/Dublin",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "uk",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "allow_symbol_change": true,
+                        "container_id": "tradingview_2f322"
+                    }
+                );
+            </script>
         </div>
-        <div class="btn-group">
-            <button type="submit" name="buy-stock" value="buy-stock" class="btn btn-primary">Buy</button>
-            <button type="submit" name="sell-stock" value="sell-stock" class="btn btn-primary">Sell</button>
-        </div>
-    </form>
+        <!-- TradingView Widget END -->
+
 <script>
     // This script is from stackoverflow. Link: https://stackoverflow.com/questions/51682084/how-to-hide-django-message-after-it-is-displayed-for-few-seconds/51682933#:~:text=You%20need%20to%20write%20javascript,hide%20message%20after%20some%20time.&text=Put%20this%20code%20inside%20base,will%20make%20your%20message%20disappear.
     var message_id = document.getElementById("msg");

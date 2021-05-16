@@ -20,7 +20,7 @@ def portfolio(request):
             api = "Error..."
         return render(request, 'portfolio/home.html', {'api': api})
     else:
-        return render(request, 'portfolio/index.html', {'ticker': 'testsymbol'})
+        return render(request, 'portfolio/index.html', {'ticker': 'testsymbol'}) # testsymbol is used to trigger the error message
 
 
 def add_stock(request):
