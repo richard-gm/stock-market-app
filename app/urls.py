@@ -33,7 +33,8 @@ from src.views import (
 )
 
 from profiles.views import (
-    api_view
+    api_view,
+    membership_view
 )
 
 urlpatterns = [
@@ -55,6 +56,8 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('portfolio/', include('portfolio.urls')),
     path('api/', api_view),
+    path('membership/', membership_view),
+
 ]
 
 if settings.DEBUG:

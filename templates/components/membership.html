@@ -1,0 +1,60 @@
+{% extends 'base.html' %} <br />
+{% block head_title %} Input! {% endblock head_title%}
+<br />
+{% block content %}
+    <div class="container text-center">
+        <h2>Select a membeship level</h2>
+    </div>
+
+    </br>        </br>
+
+    <style> h4 {
+        font-size: 40px;}</style>
+
+    <div class="row">
+
+        <div class="card col-sm-6" style="width: 18rem;">
+            <h4 class="card-title text-center"> <b>Basic</b></h4>
+            <div class="card-body">
+
+                <h5 class="card-title text-center"> <small>For new traders and investors starting their journey</small></h5>
+                <h5>    </h5>
+                <h4 class=" text-center"> £Free</h4>
+                <ul>
+                    <li><b>Top features:</b></li>
+                    <li>The charts that started it all.</li>
+                    <li>Worldwide market data coverage.</li>
+                    <li>Worldwide market data coverage.</li>
+                    <li>General support.</li>
+                    <li>Backtesting for trading strategies.</li>
+                    <li>2 charts in one window.</li>
+
+                </ul>
+                <p align="center"> <a href="/register" class="btn btn-primary">Get started</a></p>
+            </div>
+        </div>
+
+        <div class="card col-sm-6" style="width: 18rem;">
+            <h4 class="card-title text-center"> <b>Premium</b></h4>
+            <div class="card-body">
+
+                <h5 class="card-title text-center"> <small>Highest precision and maximum data to capture all possible opportunities</small></h5>
+                <h4 class=" text-center"> £9.99 Per month</h4>
+                <ul>
+                    <li><b>Everything in Basic, plus:</b></li>
+                    <li>Alerts that don't expire.</li>
+                    <li>25 indicators per chart.</li>
+                    <li>Charts based on custom formulas.</li>
+                    <li>Extra Support.</li>
+                    <li>Recomendation by financial analysts.</li>
+
+                </ul>
+                <p align="center"><a href="/register" class="btn btn-primary">Get started</a></p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock content %}

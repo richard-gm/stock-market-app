@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib import messages
 
 from .forms import TickerSymbolForm
-from .api import get_meta_data, get_latest_price, get_stocks_news
+from .api import get_meta_data, get_latest_price, get_stocks_news, get_technical_analysis, get_news_sentiment_analysis
 
 
 def index(request):
@@ -28,6 +28,7 @@ def ticker(request, tid):
     context['meta'] = get_meta_data(tid)
     context['price'] = get_latest_price(tid, request)
     context['news'] = get_stocks_news(tid, request)
-    # context['statements'] = get_latest_statements(tid)
+    context['priceTarget'] = get_technical_analysis(tid)
+    context['newsSentiment'] = get_news_sentiment_analysis(tid)
     return render(request, 'stocks/ticker.html', context)
 

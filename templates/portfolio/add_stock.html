@@ -36,7 +36,7 @@
             <th scope="col">Daily change</th>
             <th scope="col">Stocks owned</th>
             <th scope="col">Buying price</th>
-            <th scope="col">Gain/Lose</th>
+            <th scope="col">PE/Ratio</th>
             <th scope="col">Remove</th>
         </tr>
         </thead>
@@ -47,10 +47,10 @@
                     <th scope="row">{{ item.symbol }}</th>
                     <th scope="row">{{ item.companyName }}</th>
                     <th scope="row">${{ item.latestPrice |floatformat:-2 }}</th>
-                    <th scope="row">%{{ item.latestPrice }}</th>
-                    <th scope="row">{{ item.latestPrice }}</th>
+                    <th scope="row">{{ item.avgTotalVolume |floatformat:-2 }}</th>
+                    <th scope="row">Null</th>
                     <th scope="row">${{ item.latestPrice }}</th>
-                    <th scope="row">${{ item.latestPrice }}</th>
+                    <th scope="row">{{ item.peRatio }}</th>
                     <td><a href="{% url 'delete_stock' item.symbol %}" class="btn btn-outline-danger btn-sm">X</a></td>
 
                 </tr>

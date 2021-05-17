@@ -58,10 +58,10 @@
 {#                <button type="submit" name="sell-stock" value="sell-stock" class="btn btn-primary">Sell</button>#}
             </div>
         </form>
-        </br></br> </br></br>
+        </br></br> </br>
         <div class="container">
             <section class="row">
-                <h3>Our recommendation for - ({{ ticker }}) is: </h3>
+                <h4>Our recommendation based on Technical analysis - ({{ ticker }}) is: </h4>
                 {% if meta.AnalystTargetPrice >= price.close and meta.50DayMovingAverage <= meta.200DayMovingAverage %}
                     <h3> Sell 📉</h3>
                 {% else %}
@@ -69,6 +69,21 @@
                 {% endif %}
             </section>
         </div></br>
+        {#   Technical analysis from API     #}
+        <div class="border-top my-3"></div></br>
+        <h3> Technical analysis recommendation by financial analysts: </h3>
+        <h5> Number of BUY recommendation: {{ priceTarget.buy}}</h5>
+        <h5> Number of SELL recommendation: {{ priceTarget.sell}}</h5>
+        <p> Disclaimer* Date received from finnhub.io - Free API</p></br>
+        <div class="border-top my-3"></div></br></br>
+        {#  END of Technical analysis from API     #}
+        {#   News sentiment analysis from API     #}
+        <h3> News sentiment analysis  </h3>
+        <h5> Bullish sentiment score: {{ newsSentiment.bullishPercent}}</h5>
+        <h5> Bearish sentiment score: {{ newsSentiment.bearishPercent}}</h5>
+        <p> Disclaimer* Date received from finnhub.io - Free API</p></br>
+        <div class="border-top my-3"></div></br></br>
+        {#  END of News analysis from API     #}
 
         <div class="mh-100 mw-100">
             <!-- TradingView Widget BEGIN -->
@@ -107,6 +122,8 @@
 
             </div>
         </div></br></br></br>
+
+
 
     {% endif %}
     <div class="text-center">

@@ -60,3 +60,7 @@ def api_view(request, *args, **kwargs):
 
 def tweets_list_view(request, *args, **kwargs):
     return render(request, "tweets-files/list.html")
+
+
+def membership_view(request, *args, **kwargs):
+    return render(request, "components/membership.html")

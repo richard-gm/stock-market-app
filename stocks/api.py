@@ -48,23 +48,27 @@ def get_latest_price(ticker, request):
     return response.json()[0]
 
 
-# def get_latest_statements(ticker):
-#     url = 'https://api.tiingo.com/tiingo/fundamentals/{}/statements?startDate=2021-1-30'.format(ticker)
-#     response = requests.get(url, headers=headers)
-#     responseStatus = response.status_code
-#     if responseStatus == 400:
-#         print(response.status_code)
-#         return HttpResponseRedirect("/")
-#     print(response.status_code)
-#     return response.json()[0]
+def get_technical_analysis(ticker):
+    url = 'https://finnhub.io/api/v1/scan/technical-indicator?symbol={}&resolution=60&token=c2fqdaiad3i850j6a340'.format(ticker)
+    response = requests.get(url, headers=headers)
+    responseStatus = response.status_code
+    if responseStatus == 400:
+        print(response.status_code)
+        return HttpResponseRedirect("/")
+    print(response.status_code)
+    r = response.json()
+    print(r['technicalAnalysis']['count'])
+    return response.json()['technicalAnalysis']['count']
 
 
-# def get_latest_news(ticker):
-#     try:
-#         # url = 'https://api.tiingo.com/tiingo/news?'
-#         url = 'https://api.tiingo.com/tiingo/news/tickers={}'.format(ticker)
-#         response = requests.get(url, headers=headers)
-#         print(response.content)
-#         return response.json()
-#     except:
-#         print("An exception with the news")
+def get_news_sentiment_analysis(ticker):
+    url = 'https://finnhub.io/api/v1/news-sentiment?symbol={}&resolution=60&token=c2fqdaiad3i850j6a340'.format(ticker)
+    response = requests.get(url, headers=headers)
+    responseStatus = response.status_code
+    if responseStatus == 400:
+        print(response.status_code)
+        return HttpResponseRedirect("/")
+    print(response.status_code)
+    r = response.json()
+    print(r['sentiment'])
+    return response.json()['sentiment']
